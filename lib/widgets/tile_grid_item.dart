@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/models/tile.dart";
 
 class TileGridItem extends StatelessWidget {
   const TileGridItem({
@@ -7,7 +8,7 @@ class TileGridItem extends StatelessWidget {
     required this.onSelectTile,
   });
 
-  final tile;
+  final Tile tile;
   final void Function() onSelectTile;
 
   @override
