@@ -1,15 +1,32 @@
+import "package:firebase_auth/firebase_auth.dart";
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:organizer_rodzinny/screens/auth/auth_screen.dart';
+import 'package:organizer_rodzinny/screens/auth/splash_screen.dart';
 import 'package:organizer_rodzinny/screens/main_screen.dart';
+
+import 'firebase_options.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 65, 26, 71),
 );
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
     theme: ThemeData(
       colorScheme: kColorScheme,
       primaryColor: kColorScheme.primary,
+      appBarTheme: AppBarTheme(
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: kColorScheme.onPrimaryContainer,
+        ),
+      ),
       textTheme: const TextTheme().copyWith(
         titleLarge: TextStyle(
           fontSize: 32,
@@ -65,6 +82,21 @@ void main() {
       //   ),
       // ),
     ),
-    home: const MainScreen(),
+    // home: const MainScreen(),
+    home: StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SplashScreen();
+        }
+
+        if (snapshot.hasData) {
+          print(snapshot);
+          return const MainScreen();
+        }
+
+        return const AuthScreen();
+      },
+    ),
   ));
 }
