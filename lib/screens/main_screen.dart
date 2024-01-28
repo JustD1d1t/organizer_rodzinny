@@ -1,3 +1,4 @@
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import 'package:organizer_rodzinny/data/dummy_data.dart';
 import 'package:organizer_rodzinny/screens/finances/finances_screen.dart';
@@ -44,6 +45,15 @@ class _MainScreenState extends State<MainScreen> {
           "Organizer rodzinny",
           style: Theme.of(context).textTheme.titleMedium,
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app,
+                color: Theme.of(context).colorScheme.primary),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+          ),
+        ]
       ),
       body: GridView(
         padding: const EdgeInsets.all(8),
