@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/meal.dart";
+import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import 'package:organizer_rodzinny/models/tile.dart';
 
 final availableTiles = [
@@ -358,6 +359,124 @@ final availableMeals = [
       "Podawać z dodatkiem śmietany i prażonymi pestkami dyni",
     ],
   ),
+];
+
+final exampleShoppingList = [
+  ShoppingListItem(
+    name: "Bułki",
+    quantity: 2,
+    unit: "szt.",
+    checked: false,
+    category: "Pieczywo",
+  ),
+  ShoppingListItem(
+    name: "Mleko",
+    quantity: 1,
+    unit: "l",
+    checked: false,
+    category: "Nabiał",
+  ),
+  ShoppingListItem(
+    name: "Jogurt",
+    quantity: 2,
+    unit: "szt.",
+    checked: false,
+    category: "Nabiał",
+  ),
+  ShoppingListItem(
+    name: "Ser",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Nabiał",
+  ),
+  ShoppingListItem(
+    name: "Szynka",
+    quantity: 0.5,
+    unit: "kg",
+    checked: false,
+    category: "Wędliny",
+  ),
+  ShoppingListItem(
+    name: "Pomidory",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Warzywa",
+  ),
+  ShoppingListItem(
+    name: "Ogórki",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Warzywa",
+  ),
+  ShoppingListItem(
+    name: "Papryka",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Warzywa",
+  ),
+  ShoppingListItem(
+    name: "Cebula",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Warzywa",
+  ),
+  ShoppingListItem(
+    name: "Marchewka",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Warzywa",
+  ),
+  ShoppingListItem(
+    name: "Ziemniaki",
+    quantity: 2,
+    unit: "kg",
+    checked: false,
+    category: "Warzywa",
+  ),
+  ShoppingListItem(
+    name: "Chleb",
+    quantity: 1,
+    unit: "szt.",
+    checked: false,
+    category: "Pieczywo",
+  ),
+  ShoppingListItem(
+    name: "Mąka",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Produkty sypkie",
+  ),
+  ShoppingListItem(
+    name: "Makaron",
+    quantity: 1,
+    unit: "kg",
+    checked: false,
+    category: "Produkty sypkie",
+  ),
+];
+
+final categoryList = [
+  "Pieczywo",
+  "Nabiał",
+  "Wędliny",
+  "Warzywa",
+  "Produkty sypkie",
+  "Przyprawy",
+  "Słodycze",
+  "Napoje",
+  "Alkohol",
+  "Art. higieniczne",
+  "Art. czystości",
+  "Art. dla dzieci",
+  "Art. dla zwierząt",
+  "Inne",
 ];
 
 final availableBudget = {

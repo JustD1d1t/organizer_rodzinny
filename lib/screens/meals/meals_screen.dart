@@ -49,7 +49,7 @@ class _MealsScreenState extends State<MealsScreen> {
         builder: (ctx) => const AddMealScreen(),
       ),
     );
-    print(meal);
+
     if (meal.name != null) {
       setState(() {
         meals.add(meal);

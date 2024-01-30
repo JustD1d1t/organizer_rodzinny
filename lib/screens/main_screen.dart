@@ -8,7 +8,7 @@ import 'package:organizer_rodzinny/screens/notes/notes_screen.dart';
 import 'package:organizer_rodzinny/screens/pantry/pantry_screen.dart';
 import "package:organizer_rodzinny/screens/receipts/receipts_screen.dart";
 import 'package:organizer_rodzinny/screens/recipes/recipes_screen.dart';
-import 'package:organizer_rodzinny/screens/shopping/shopping_screen.dart';
+import 'package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart';
 import 'package:organizer_rodzinny/widgets/tile_grid_item.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
     RecipesScreen(),
     ReceiptsScreen(),
     NotesScreen(),
-    ShoppingScreen(),
+    ShoppingListScreen(),
     PantryScreen(),
   ];
   void _selectTile(BuildContext context, int index) {
@@ -41,20 +41,19 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Organizer rodzinny",
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.exit_to_app,
-                color: Theme.of(context).colorScheme.primary),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-            },
+          title: Text(
+            "Organizer rodzinny",
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-        ]
-      ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.exit_to_app,
+                  color: Theme.of(context).colorScheme.primary),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+              },
+            ),
+          ]),
       body: GridView(
         padding: const EdgeInsets.all(8),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
