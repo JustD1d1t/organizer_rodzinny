@@ -3,9 +3,12 @@ import "package:flutter/services.dart";
 import "package:organizer_rodzinny/data/dummy_data.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 
-
 class AddShopingItemScreen extends StatefulWidget {
-  const AddShopingItemScreen({super.key, required this.appBarTitle, this.shoppingListItem,});
+  const AddShopingItemScreen({
+    super.key,
+    required this.appBarTitle,
+    this.shoppingListItem,
+  });
   final ShoppingListItem? shoppingListItem;
   final String appBarTitle;
 
@@ -20,7 +23,7 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
   var _shoppingItemQuantity;
   var _shoppingItemUnit;
   var _shoppingItemCategory;
-  var _shoppingItemNameik;
+  var _shoppingItemChecked;
 
   @override
   void initState() {
@@ -30,6 +33,9 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
       _shoppingItemQuantity = widget.shoppingListItem!.quantity;
       _shoppingItemUnit = widget.shoppingListItem!.unit;
       _shoppingItemCategory = widget.shoppingListItem!.category;
+      _shoppingItemChecked = widget.shoppingListItem!.checked;
+    } else {
+      _shoppingItemChecked = false;
     }
   }
 
@@ -46,7 +52,7 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
         name: _shoppingItemName,
         quantity: _shoppingItemQuantity,
         unit: _shoppingItemUnit,
-        checked: false,
+        checked: _shoppingItemChecked,
         category: _shoppingItemCategory,
       ),
     );
@@ -64,23 +70,6 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: "Nazewka"),
-                maxLength: 30,
-                initialValue: _shoppingItemNameik,
-                validator: (value) {
-                  if (value == null ||
-                      value.isEmpty ||
-                      value.trim().length <= 5 ||
-                      value.trim().length > 30) {
-                    return 'Must be between 5 and 30 characters.';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _shoppingItemName = value!;
-                },
-              ),
               TextFormField(
                 decoration: const InputDecoration(labelText: "Nazwa"),
                 maxLength: 30,
@@ -102,6 +91,7 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
               DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: "Jednostka"),
                   // TODO: problem z initial value
+                  // value: _shoppingItemUnit,
                   isExpanded: true,
                   icon: const Icon(Icons.arrow_downward),
                   style: Theme.of(context).textTheme.bodyLarge,
@@ -126,9 +116,8 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
-                      value.trim().length <= 5 ||
-                      value.trim().length > 50) {
-                    return 'Must be between 5 and 50 characters.';
+                      double.parse(value) < 0) {
+                    return 'Musisz podać ilość.';
                   }
                   return null;
                 },
