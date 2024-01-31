@@ -28,7 +28,9 @@ class ShoppingListList extends StatelessWidget {
       child: ListView.separated(
         itemCount: shoppingList.length,
         itemBuilder: (context, index) => Dismissible(
-          onDismissed: (direction) => {},
+          onDismissed: (direction) {
+            onRemoveItem(shoppingList[index]);
+          },
           key: ValueKey(shoppingList[index].id),
           child: ShoppingListSingleItem(
             shoppingListItem: shoppingList[index],

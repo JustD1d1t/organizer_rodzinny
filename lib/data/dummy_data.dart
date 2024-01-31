@@ -479,6 +479,14 @@ final categoryList = [
   "Inne",
 ];
 
+final units = [
+  "szt.",
+  "kg",
+  "l",
+  "g",
+  "ml",
+];
+
 final availableBudget = {
   "budget": 4000.0,
   "spent": 2000.0,

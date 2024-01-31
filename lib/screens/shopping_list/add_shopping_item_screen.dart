@@ -20,7 +20,7 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _shoppingItemName;
-  var _shoppingItemQuantity;
+  var _shoppingItemQuantity = 0.0;
   var _shoppingItemUnit;
   var _shoppingItemCategory;
   var _shoppingItemChecked;
@@ -78,9 +78,9 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
-                      value.trim().length <= 5 ||
+                      value.trim().length <= 2 ||
                       value.trim().length > 30) {
-                    return 'Must be between 5 and 30 characters.';
+                    return 'Must be between 3 and 30 characters.';
                   }
                   return null;
                 },
@@ -90,16 +90,14 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
               ),
               DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: "Jednostka"),
-                  // TODO: problem z initial value
-                  // value: _shoppingItemUnit,
+                  value: _shoppingItemUnit,
                   isExpanded: true,
                   icon: const Icon(Icons.arrow_downward),
                   style: Theme.of(context).textTheme.bodyLarge,
                   onChanged: (value) => setState(() {
                         _shoppingItemUnit = value;
                       }),
-                  items: categoryList
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: units.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -108,7 +106,9 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
               TextFormField(
                 decoration: const InputDecoration(labelText: "Ilość"),
                 maxLength: 100,
-                initialValue: _shoppingItemQuantity.toString(),
+                initialValue: _shoppingItemQuantity % 1 == 0
+                    ? _shoppingItemQuantity.toInt().toString()
+                    : _shoppingItemQuantity.toStringAsFixed(2),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))
@@ -122,18 +122,25 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                   return null;
                 },
                 onSaved: (value) {
-                  _shoppingItemQuantity = value!;
+                  _shoppingItemQuantity = double.parse(value!);
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: "Kategoria"),
-                maxLength: 100,
-                initialValue: _shoppingItemCategory,
-                keyboardType: TextInputType.name,
-                onSaved: (value) {
-                  _shoppingItemCategory = value!;
-                },
-              ),
+              DropdownButtonFormField(
+                  decoration: const InputDecoration(labelText: "Kategoria"),
+                  value: _shoppingItemCategory,
+                  isExpanded: true,
+                  icon: const Icon(Icons.arrow_downward),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  onChanged: (value) => setState(() {
+                        _shoppingItemCategory = value;
+                      }),
+                  items: categoryList
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList()),
               const SizedBox(
                 height: 10,
               ),

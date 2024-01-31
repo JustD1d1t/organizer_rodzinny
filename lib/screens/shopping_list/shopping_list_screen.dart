@@ -21,6 +21,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             const AddShopingItemScreen(appBarTitle: "Dodaj element"),
       ),
     );
+    print(shoppingListItem);
 
     if (shoppingListItem != null) {
       setState(() {
@@ -35,10 +36,29 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     });
   }
 
-  void removeItem(ShoppingListItem shoppingListItem) {
+  void removeItem(ShoppingListItem shoppingListItem) {    
+    final itemIndex = shoppingListItems.indexOf(shoppingListItem);
     setState(() {
       shoppingListItems.remove(shoppingListItem);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${shoppingListItem.name} usunięte'),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Cofnij',
+          onPressed: () {
+            setState(() {
+              shoppingListItems.insert(
+                itemIndex,
+                shoppingListItem,
+              );
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void editItem(ShoppingListItem shoppingListItem) async {
