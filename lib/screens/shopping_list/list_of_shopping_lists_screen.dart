@@ -15,24 +15,24 @@ class ListOfShoppingListsScreen extends StatefulWidget {
 }
 
 class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
-  final List<ShoppingList> shoppingList = exampleShoppingLists;
+  List<ShoppingList> shoppingLists = exampleShoppingLists;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void openList(ShoppingList shoppingListSingleItem) async {
-    final id = shoppingListSingleItem.id;
-    final index = shoppingList.indexWhere((element) => element.id == id);
-    final editingShoppingListItem = shoppingList[index];
-    final ShoppingList editedShoppingList = await Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => ShoppingListScreen(
-          shoppingList: editingShoppingListItem,
+          shoppingList: shoppingListSingleItem,
           onEditName: changeListName,
           onRemoveList: removeList,
         ),
       ),
     );
-    setState(() {
-      shoppingList[index] = editedShoppingList;
-    });
+    shoppingLists = exampleShoppingLists;
   }
 
   void addList() async {
@@ -44,15 +44,15 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
     );
     if (list != null) {
       setState(() {
-        shoppingList.add(list);
+        shoppingLists.add(list);
       });
     }
   }
 
   void removeList(ShoppingList list) {
-    final listIndex = shoppingList.indexOf(list);
+    final listIndex = shoppingLists.indexOf(list);
     setState(() {
-      shoppingList.remove(list);
+      shoppingLists.remove(list);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -63,7 +63,7 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
           label: 'Undo',
           onPressed: () {
             setState(() {
-              shoppingList.insert(
+              shoppingLists.insert(
                 listIndex,
                 list,
               );
@@ -81,10 +81,10 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
       context: context,
       builder: (context) => EditShoppingListName(listToEdit: list),
     );
-    final listIndex = shoppingList.indexOf(list);
+    final listIndex = shoppingLists.indexOf(list);
     if (updatedList != null) {
       setState(() {
-        shoppingList[listIndex] = updatedList;
+        shoppingLists[listIndex] = updatedList;
       });
     }
   }
@@ -117,7 +117,8 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
           ),
           children: [
             for (var shoppingList in shoppingLists)
-              ShoppingListSingleList(list: shoppingList, onTap: openList),
+              ShoppingListSingleList(
+                  shoppingList: shoppingList, onSingleListClick: openList),
           ],
         ),
       ),
