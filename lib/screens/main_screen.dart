@@ -8,7 +8,7 @@ import 'package:organizer_rodzinny/screens/notes/notes_screen.dart';
 import 'package:organizer_rodzinny/screens/pantry/pantry_screen.dart';
 import "package:organizer_rodzinny/screens/receipts/receipts_screen.dart";
 import 'package:organizer_rodzinny/screens/recipes/recipes_screen.dart';
-import 'package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart';
+import 'package:organizer_rodzinny/screens/shopping_list/list_of_shopping_lists_screen.dart';
 import 'package:organizer_rodzinny/widgets/tile_grid_item.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
     RecipesScreen(),
     ReceiptsScreen(),
     NotesScreen(),
-    ShoppingListScreen(),
+    ListOfShoppingListsScreen(),
     PantryScreen(),
   ];
   void _selectTile(BuildContext context, int index) {

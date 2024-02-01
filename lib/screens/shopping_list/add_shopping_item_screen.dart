@@ -1,7 +1,36 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
-import "package:organizer_rodzinny/data/dummy_data.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
+
+enum Category {
+  bread(label: "Pieczywo"),
+  dairy(label: "Nabiał"),
+  fruit(label: "Owoce"),
+  vegetables(label: "Warzywa"),
+  meat(label: "Mięso"),
+  fish(label: "Ryby"),
+  sweets(label: "Słodycze"),
+  drinks(label: "Napoje"),
+  alcohol(label: "Alkohol"),
+  other(label: "Inne");
+
+  const Category({required this.label});
+
+  final String label;
+}
+
+enum Unit {
+  kg(label: "kg"),
+  dag(label: "dag"),
+  g(label: "g"),
+  l(label: "l"),
+  ml(label: "ml"),
+  szt(label: "szt");
+
+  const Unit({required this.label});
+
+  final String label;
+}
 
 class AddShopingItemScreen extends StatefulWidget {
   const AddShopingItemScreen({
@@ -89,20 +118,24 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                 },
               ),
               DropdownButtonFormField(
-                  decoration: const InputDecoration(labelText: "Jednostka"),
-                  value: _shoppingItemUnit,
-                  isExpanded: true,
-                  icon: const Icon(Icons.arrow_downward),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  onChanged: (value) => setState(() {
-                        _shoppingItemUnit = value;
-                      }),
-                  items: units.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList()),
+                decoration: const InputDecoration(labelText: "Jednostka"),
+                value: _shoppingItemUnit,
+                isExpanded: true,
+                icon: const Icon(Icons.arrow_downward),
+                style: Theme.of(context).textTheme.bodyLarge,
+                onChanged: (value) => setState(() {
+                  _shoppingItemUnit = value;
+                }),
+                items: Unit.values
+                    .asMap()
+                    .entries
+                    .map<DropdownMenuItem<String>>((unit) {
+                  return DropdownMenuItem<String>(
+                    value: unit.value.label.toString(),
+                    child: Text(unit.value.label.toString()),
+                  );
+                }).toList(),
+              ),
               TextFormField(
                 decoration: const InputDecoration(labelText: "Ilość"),
                 maxLength: 100,
@@ -134,11 +167,13 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                   onChanged: (value) => setState(() {
                         _shoppingItemCategory = value;
                       }),
-                  items: categoryList
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: Category.values
+                      .asMap()
+                      .entries
+                      .map<DropdownMenuItem<String>>((category) {
                     return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                      value: category.value.label.toString(),
+                      child: Text(category.value.label.toString()),
                     );
                   }).toList()),
               const SizedBox(

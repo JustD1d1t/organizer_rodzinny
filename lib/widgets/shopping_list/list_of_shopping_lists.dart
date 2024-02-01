@@ -2,8 +2,8 @@ import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_item.dart";
 
-class ShoppingListList extends StatelessWidget {
-  const ShoppingListList({
+class ListOfShoppingLists extends StatelessWidget {
+  const ListOfShoppingLists({
     super.key,
     required this.shoppingList,
     required this.onCheckboxChanged,

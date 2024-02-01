@@ -1,19 +1,25 @@
 import "package:flutter/material.dart";
-import "package:organizer_rodzinny/data/dummy_data.dart";
+import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import "package:organizer_rodzinny/screens/shopping_list/add_shopping_item_screen.dart";
-import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_list.dart";
+import 'package:organizer_rodzinny/widgets/shopping_list/list_of_shopping_lists.dart';
 
 class ShoppingListScreen extends StatefulWidget {
-  const ShoppingListScreen({super.key});
+  const ShoppingListScreen(
+      {super.key,
+      required this.shoppingList,
+      required this.onEditName,
+      required this.onRemoveList});
+
+  final ShoppingList shoppingList;
+  final Function onEditName;
+  final Function onRemoveList;
 
   @override
   State<ShoppingListScreen> createState() => _ShoppingListScreenState();
 }
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
-  final List<ShoppingListItem> shoppingListItems = exampleShoppingList;
-
   void openAddShoppingItemScreen(BuildContext context) async {
     final shoppingListItem = await Navigator.of(context).push(
       MaterialPageRoute(
@@ -21,11 +27,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             const AddShopingItemScreen(appBarTitle: "Dodaj element"),
       ),
     );
-    print(shoppingListItem);
 
     if (shoppingListItem != null) {
       setState(() {
-        shoppingListItems.add(shoppingListItem);
+        widget.shoppingList.list.add(shoppingListItem);
       });
     }
   }
@@ -36,10 +41,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     });
   }
 
-  void removeItem(ShoppingListItem shoppingListItem) {    
-    final itemIndex = shoppingListItems.indexOf(shoppingListItem);
+  void removeItem(ShoppingListItem shoppingListItem) {
+    final itemIndex = widget.shoppingList.list.indexOf(shoppingListItem);
     setState(() {
-      shoppingListItems.remove(shoppingListItem);
+      widget.shoppingList.list.remove(shoppingListItem);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -50,7 +55,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           label: 'Cofnij',
           onPressed: () {
             setState(() {
-              shoppingListItems.insert(
+              widget.shoppingList.list.insert(
                 itemIndex,
                 shoppingListItem,
               );
@@ -63,8 +68,9 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
 
   void editItem(ShoppingListItem shoppingListItem) async {
     final id = shoppingListItem.id;
-    final index = shoppingListItems.indexWhere((element) => element.id == id);
-    final editingShoppingListItem = shoppingListItems[index];
+    final index =
+        widget.shoppingList.list.indexWhere((element) => element.id == id);
+    final editingShoppingListItem = widget.shoppingList.list[index];
     final ShoppingListItem editedShoppingListItem =
         await Navigator.of(context).push(
       MaterialPageRoute(
@@ -75,16 +81,31 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       ),
     );
     setState(() {
-      shoppingListItems[index] = editedShoppingListItem;
+      widget.shoppingList.list[index] = editedShoppingListItem;
     });
+  }
+
+  void removeList() {
+    Navigator.of(context).pop();
+    widget.onRemoveList(widget.shoppingList);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lista zakupowa"),
+        title: Text(widget.shoppingList.name),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: removeList,
+          ),
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              widget.onEditName(widget.shoppingList);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
@@ -93,8 +114,8 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           ),
         ],
       ),
-      body: ShoppingListList(
-        shoppingList: exampleShoppingList,
+      body: ListOfShoppingLists(
+        shoppingList: widget.shoppingList.list,
         onCheckboxChanged: changeItemSelection,
         onRemoveItem: removeItem,
         onEditItem: editItem,
