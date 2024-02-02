@@ -24,10 +24,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
     }
 
     _formKey.currentState!.save();
-    print(_mealName);
-    print(_mealDescription);
-    print(_mealIngredients);
-    print(_mealSteps);
 
     Navigator.of(context).pop(
       Meal(
