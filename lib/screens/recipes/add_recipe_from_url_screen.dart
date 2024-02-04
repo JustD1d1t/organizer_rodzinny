@@ -19,7 +19,7 @@ class _AddRecipeFromUrlScreenState extends State<AddRecipeFromUrlScreen> {
 
   var _recipeURL = "";
 
-  List<Ingredient> ingredients = [];
+  List<ShoppingRecipeIngredient> ingredients = [];
   var recipeName = "";
 
   void _saveForm() async {
@@ -46,10 +46,11 @@ class _AddRecipeFromUrlScreenState extends State<AddRecipeFromUrlScreen> {
         final unit = regExpMatch.group(3);
         setState(() {
           ingredients.add(
-            Ingredient(
+            ShoppingRecipeIngredient(
               name: name.toString(),
               amount: double.parse(amount!),
               unit: unit.toString(),
+              checked: false,
             ),
           );
         });

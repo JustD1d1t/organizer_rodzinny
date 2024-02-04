@@ -11,6 +11,7 @@ enum Category {
   sweets(label: "Słodycze"),
   drinks(label: "Napoje"),
   alcohol(label: "Alkohol"),
+  loose(label: "Produkty sypkie"),
   other(label: "Inne");
 
   const Category({required this.label});

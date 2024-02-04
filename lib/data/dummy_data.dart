@@ -61,15 +61,24 @@ final availableRecipes = [
     name: "Kotlety schabowe",
     description: "Kotlety schabowe z ziemniakami i surówką z marchewki",
     ingredients: [
-      Ingredient(name: "Schab", amount: 1, unit: "kg"),
-      Ingredient(name: "Ziemniaki", amount: 1, unit: "kg"),
-      Ingredient(name: "Marchewka", amount: 1, unit: "kg"),
-      Ingredient(name: "Bułka tarta", amount: 1, unit: "kg"),
-      Ingredient(name: "Jajko", amount: 1, unit: "szt"),
-      Ingredient(name: "Mąka", amount: 1, unit: "kg"),
-      Ingredient(name: "Sól", amount: 1, unit: "szczypta"),
-      Ingredient(name: "Pieprz", amount: 1, unit: "szczypta"),
-      Ingredient(name: "Olej", amount: 1, unit: "l"),
+      ShoppingRecipeIngredient(
+          name: "Schab", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Ziemniaki", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Marchewka", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Bułka tarta", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Jajko", amount: 1, unit: "szt", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Mąka", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Sól", amount: 1, unit: "szczypta", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Pieprz", amount: 1, unit: "szczypta", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Olej", amount: 1, unit: "l", checked: false),
     ],
     steps: [
       "Schab umyć, osuszyć, pokroić w plastry, rozbić tłuczkiem do mięsa, posolić, popieprzyć",
@@ -86,15 +95,24 @@ final availableRecipes = [
     name: "Kotlety mielone",
     description: "Kotlety mielone z ziemniakami i surówką z marchewki",
     ingredients: [
-      Ingredient(name: "Mięso", amount: 1, unit: "kg"),
-      Ingredient(name: "Ziemniaki", amount: 1, unit: "kg"),
-      Ingredient(name: "Marchewka", amount: 1, unit: "kg"),
-      Ingredient(name: "Bułka tarta", amount: 1, unit: "kg"),
-      Ingredient(name: "Jajko", amount: 1, unit: "szt"),
-      Ingredient(name: "Mąka", amount: 1, unit: "kg"),
-      Ingredient(name: "Sól", amount: 1, unit: "szczypta"),
-      Ingredient(name: "Pieprz", amount: 1, unit: "szczypta"),
-      Ingredient(name: "Olej", amount: 1, unit: "l"),
+      ShoppingRecipeIngredient(
+          name: "Mięso", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Ziemniaki", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Marchewka", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Bułka tarta", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Jajko", amount: 1, unit: "szt", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Mąka", amount: 1, unit: "kg", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Sól", amount: 1, unit: "szczypta", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Pieprz", amount: 1, unit: "szczypta", checked: false),
+      ShoppingRecipeIngredient(
+          name: "Olej", amount: 1, unit: "l", checked: false),
     ],
     steps: [
       "Mięso mielone wymieszać z jajkiem, posolić, popieprzyć",

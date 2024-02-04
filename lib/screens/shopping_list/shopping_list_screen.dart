@@ -2,7 +2,9 @@ import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/screens/shopping_list/add_shopping_item_screen.dart";
+import "package:organizer_rodzinny/screens/shopping_list/add_shopping_recipe_screen.dart";
 import 'package:organizer_rodzinny/widgets/shopping_list/list_of_shopping_items.dart';
+import 'package:organizer_rodzinny/widgets/shopping_list/select_add_item_bottom_sheet.dart';
 
 class ShoppingListScreen extends StatefulWidget {
   const ShoppingListScreen(
@@ -20,7 +22,7 @@ class ShoppingListScreen extends StatefulWidget {
 }
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
-  void openAddShoppingItemScreen(BuildContext context) async {
+  void openAddShoppingItemScreen() async {
     final shoppingListItem = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) =>
@@ -65,9 +67,53 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     );
   }
 
+  void openAddRecipeScreen() async {
+    final recipe = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => AddShoppingRecipeScreen(
+          addRecipe: addRecipeToShoppingList,
+        ),
+      ),
+    );
+
+    if (recipe != null) {
+      setState(() {
+        widget.shoppingList.recipesList.add(recipe);
+      });
+    }
+  }
+
+  void selectAddButton() async {
+    final selectedItem = await showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const SelectAddItemBottomSheet(),
+    );
+    if (selectedItem != null) {
+      if (selectedItem["type"] == "item") {
+        openAddShoppingItemScreen();
+      } else {
+        openAddRecipeScreen();
+      }
+    }
+  }
+
   void changeMealItemSelection(ShoppingRecipeItem recipe, bool newValue) {
     setState(() {
       recipe.checked = newValue;
+    });
+  }
+
+  addRecipeToShoppingList(Recipe recipe) {
+    setState(() {
+      widget.shoppingList.recipesList.add(
+        ShoppingRecipeItem(
+          name: recipe.name,
+          checked: false,
+          ingredients: recipe.ingredients,
+        ),
+      );
     });
   }
 
@@ -90,7 +136,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              openAddShoppingItemScreen(context);
+              selectAddButton();
             },
           ),
         ],
