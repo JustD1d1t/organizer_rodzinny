@@ -1,19 +1,19 @@
 import "package:flutter/material.dart";
-import "package:organizer_rodzinny/models/meal.dart";
-import "package:organizer_rodzinny/screens/meals/meal_details.dart";
+import 'package:organizer_rodzinny/models/recipe.dart';
+import 'package:organizer_rodzinny/screens/recipes/recipe_details_screen.dart';
 
-class MealItem extends StatelessWidget {
-  const MealItem({
+class RecipeItem extends StatelessWidget {
+  const RecipeItem({
     super.key,
-    required this.meal,
+    required this.recipe,
   });
 
-  final Meal meal;
+  final Recipe recipe;
 
-  void openMealDetails(BuildContext context) {
+  void openRecipeDetails(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealDetails(meal: meal),
+        builder: (ctx) => RecipeDetails(recipe: recipe),
       ),
     );
   }
@@ -28,11 +28,11 @@ class MealItem extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
-          openMealDetails(context);
+          openRecipeDetails(context);
         },
         child: ListTile(
-            title: Text(meal.name),
-            subtitle: Text(meal.description),
+            title: Text(recipe.name),
+            subtitle: recipe.description != null ? Text(recipe.description!) : null,
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
