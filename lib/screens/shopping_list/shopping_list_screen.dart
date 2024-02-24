@@ -25,8 +25,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   void openAddShoppingItemScreen() async {
     final shoppingListItem = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) =>
-            const AddShopingItemScreen(appBarTitle: "Dodaj element"),
+        builder: (ctx) => AddShopingItemScreen(
+          appBarTitle: "Dodaj element",
+          shoppingList: widget.shoppingList,
+        ),
       ),
     );
 
@@ -142,6 +144,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ],
       ),
       body: ListOfShoppingItems(
+        shoppingListId: widget.shoppingList.id,
         shoppingList: widget.shoppingList.list,
         recipesList: widget.shoppingList.recipesList,
       ),

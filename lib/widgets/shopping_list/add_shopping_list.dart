@@ -23,8 +23,12 @@ class _AddShoppingListState extends State<AddShoppingList> {
 
     context.read<ShoppingListBloc>().add(
           AddShoppingListEvent(
-            shoppingList:
-                ShoppingList(name: _shoppingListName, list: const [], id: ''),
+            shoppingList: ShoppingList(
+              name: _shoppingListName,
+              list: const [],
+              id: '',
+              recipesList: const [],
+            ),
           ),
         );
     context.read<ShoppingListBloc>().add(GetAllShoppingLists());
@@ -33,6 +37,7 @@ class _AddShoppingListState extends State<AddShoppingList> {
       ShoppingList(
         list: [],
         name: _shoppingListName,
+        recipesList: [],
         id: '123',
       ),
     );

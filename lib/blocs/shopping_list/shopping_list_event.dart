@@ -7,6 +7,29 @@ abstract class ShoppingListEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetAllShoppingLists extends ShoppingListEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class GetShoppingListItems extends ShoppingListEvent {
+  final String shoppingListId;
+  const GetShoppingListItems({required this.shoppingListId});
+  @override
+  List<Object> get props => [shoppingListId];
+}
+
+class AddItemToShoppingList extends ShoppingListEvent {
+  final ShoppingListItem shoppingListItem;
+  final ShoppingList shoppingList;
+
+  const AddItemToShoppingList(
+      {required this.shoppingListItem, required this.shoppingList});
+
+  @override
+  List<Object> get props => [shoppingListItem, shoppingList];
+}
+
 class AddShoppingListEvent extends ShoppingListEvent {
   final ShoppingList shoppingList;
 
@@ -14,9 +37,4 @@ class AddShoppingListEvent extends ShoppingListEvent {
 
   @override
   List<Object> get props => [shoppingList];
-}
-
-class GetAllShoppingLists extends ShoppingListEvent {
-  @override
-  List<Object> get props => [];
 }

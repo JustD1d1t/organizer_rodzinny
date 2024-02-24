@@ -26,4 +26,36 @@ class ShoppingRecipeIngredient extends Ingredient {
   }) : super(name: name, amount: amount, unit: unit);
 
   bool checked;
+
+  ShoppingRecipeIngredient copyWith({
+    String? name,
+    double? amount,
+    String? unit,
+    bool? checked,
+  }) {
+    return ShoppingRecipeIngredient(
+      name: name ?? this.name,
+      amount: amount ?? this.amount,
+      unit: unit ?? this.unit,
+      checked: checked ?? this.checked,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'amount': amount,
+      'unit': unit,
+      'checked': checked,
+    };
+  }
+
+  factory ShoppingRecipeIngredient.fromMap(Map<String, dynamic> map) {
+    return ShoppingRecipeIngredient(
+      name: map['name'],
+      amount: map['amount'],
+      unit: map['unit'],
+      checked: map['checked'],
+    );
+  }
 }

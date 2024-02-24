@@ -74,9 +74,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       );
 
       if (recipe != null) {
-        print(recipe.name);
-        print(recipe.ingredients);
-        print(recipe.steps);
         Navigator.of(context).pop(recipe);
       }
     }

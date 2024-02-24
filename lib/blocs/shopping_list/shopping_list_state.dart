@@ -2,8 +2,12 @@ part of 'shopping_list_bloc.dart';
 
 class ShoppingListState extends Equatable {
   final List<ShoppingList> shoppingLists;
+  final List<ShoppingListItem> shoppingListItems;
+  final List<ShoppingRecipeIngredient> shoppingRecipeIngredients;
   const ShoppingListState({
     this.shoppingLists = const <ShoppingList>[],
+    this.shoppingListItems = const <ShoppingListItem>[],
+    this.shoppingRecipeIngredients = const <ShoppingRecipeIngredient>[],
   });
 
   @override
@@ -12,6 +16,9 @@ class ShoppingListState extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'shoppingLists': shoppingLists.map((e) => e.toMap()).toList(),
+      'shoppingListItems': shoppingListItems.map((e) => e.toMap()).toList(),
+      'shoppingRecipeIngredients':
+          shoppingRecipeIngredients.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -19,6 +26,14 @@ class ShoppingListState extends Equatable {
     return ShoppingListState(
       shoppingLists: List<ShoppingList>.from(
         map['shoppingLists']?.map((x) => ShoppingList.fromMap(x)) ?? [],
+      ),
+      shoppingListItems: List<ShoppingListItem>.from(
+        map['shoppingListItems']?.map((x) => ShoppingListItem.fromMap(x)) ?? [],
+      ),
+      shoppingRecipeIngredients: List<ShoppingRecipeIngredient>.from(
+        map['shoppingRecipeIngredients']
+                ?.map((x) => ShoppingRecipeIngredient.fromMap(x)) ??
+            [],
       ),
     );
   }

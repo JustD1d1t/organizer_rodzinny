@@ -66,17 +66,19 @@ final availableCategories = [
           name: 'Czerwone wino', category: 'Napoje', checked: false),
     ]
   },
-  "Owoce i Warzywa",
-  "Chleb i inne wypieki",
-  "Mleko i ser",
-  "Mięso i ryba",
-  "Składniki i przyprawy",
-  "Mrożonki i garmażeria",
-  "Produkty zbożowe",
-  "Przekąski i słodycze",
-  "Gospodarstwo domowe",
-  "Zdrowie",
-  "Artkykuły dla zwierząt",
+  {
+    'name': "Owoce i Warzywa",
+  },
+  {'name': "Chleb i inne wypieki"},
+  {'name': "Mleko i ser"},
+  {'name': "Mięso i ryba"},
+  {'name': "Składniki i przyprawy"},
+  {'name': "Mrożonki i garmażeria"},
+  {'name': "Produkty zbożowe"},
+  {'name': "Przekąski i słodycze"},
+  {'name': "Gospodarstwo domowe"},
+  {'name': "Zdrowie"},
+  {'name': "Artkykuły dla zwierząt"},
 ];
 
 final availableRecipes = [
