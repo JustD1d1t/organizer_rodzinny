@@ -4,7 +4,7 @@ import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/add_shopping_list.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/edit_shopping_list_name.dart";
-import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_list.dart";
+import 'package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_list.dart';
 
 class ListOfShoppingListsScreen extends StatefulWidget {
   const ListOfShoppingListsScreen({super.key});

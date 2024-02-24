@@ -61,7 +61,7 @@ final Map<String, dynamic> themeConfig = {
   ),
   "appBarTheme": AppBarTheme(
     titleTextStyle: TextStyle(
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
       color: isDarkMode ? schemeDark.primary : schemeLight.onPrimaryContainer,
     ),

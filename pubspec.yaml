@@ -25,6 +25,7 @@ dependencies:
   path_provider: ^2.0.9
   transparent_image: ^2.0.1
   uuid: ^4.2.2
+  beautiful_soup_dart: ^0.3.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
