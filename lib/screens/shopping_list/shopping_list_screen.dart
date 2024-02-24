@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/models/recipe.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
-import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import "package:organizer_rodzinny/screens/shopping_list/add_shopping_item_screen.dart";
-import 'package:organizer_rodzinny/widgets/shopping_list/list_of_shopping_lists.dart';
+import "package:organizer_rodzinny/screens/shopping_list/add_shopping_recipe_screen.dart";
+import 'package:organizer_rodzinny/widgets/shopping_list/list_of_shopping_items.dart';
+import 'package:organizer_rodzinny/widgets/shopping_list/select_add_item_bottom_sheet.dart';
 
 class ShoppingListScreen extends StatefulWidget {
   const ShoppingListScreen(
@@ -20,7 +22,7 @@ class ShoppingListScreen extends StatefulWidget {
 }
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
-  void openAddShoppingItemScreen(BuildContext context) async {
+  void openAddShoppingItemScreen() async {
     final shoppingListItem = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) =>
@@ -35,29 +37,28 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
-  void changeItemSelection(ShoppingListItem shoppingListItem, bool newValue) {
-    setState(() {
-      shoppingListItem.checked = newValue;
-    });
+  void removeList() {
+    Navigator.of(context).pop();
+    widget.onRemoveList(widget.shoppingList);
   }
 
-  void removeItem(ShoppingListItem shoppingListItem) {
-    final itemIndex = widget.shoppingList.list.indexOf(shoppingListItem);
+  void removeRecipe(ShoppingRecipeItem recipe) {
+    final itemIndex = widget.shoppingList.recipesList.indexOf(recipe);
     setState(() {
-      widget.shoppingList.list.remove(shoppingListItem);
+      widget.shoppingList.recipesList.remove(recipe);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('${shoppingListItem.name} usunięte'),
+        content: Text('${recipe.name} usunięte'),
         duration: const Duration(seconds: 3),
         action: SnackBarAction(
           label: 'Cofnij',
           onPressed: () {
             setState(() {
-              widget.shoppingList.list.insert(
+              widget.shoppingList.recipesList.insert(
                 itemIndex,
-                shoppingListItem,
+                recipe,
               );
             });
           },
@@ -66,28 +67,54 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     );
   }
 
-  void editItem(ShoppingListItem shoppingListItem) async {
-    final id = shoppingListItem.id;
-    final index =
-        widget.shoppingList.list.indexWhere((element) => element.id == id);
-    final editingShoppingListItem = widget.shoppingList.list[index];
-    final ShoppingListItem editedShoppingListItem =
-        await Navigator.of(context).push(
+  void openAddRecipeScreen() async {
+    final recipe = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => AddShopingItemScreen(
-          shoppingListItem: editingShoppingListItem,
-          appBarTitle: "Edytuj element",
+        builder: (ctx) => AddShoppingRecipeScreen(
+          addRecipe: addRecipeToShoppingList,
         ),
       ),
     );
+
+    if (recipe != null) {
+      setState(() {
+        widget.shoppingList.recipesList.add(recipe);
+      });
+    }
+  }
+
+  void selectAddButton() async {
+    final selectedItem = await showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const SelectAddItemBottomSheet(),
+    );
+    if (selectedItem != null) {
+      if (selectedItem["type"] == "item") {
+        openAddShoppingItemScreen();
+      } else {
+        openAddRecipeScreen();
+      }
+    }
+  }
+
+  void changeMealItemSelection(ShoppingRecipeItem recipe, bool newValue) {
     setState(() {
-      widget.shoppingList.list[index] = editedShoppingListItem;
+      recipe.checked = newValue;
     });
   }
 
-  void removeList() {
-    Navigator.of(context).pop();
-    widget.onRemoveList(widget.shoppingList);
+  addRecipeToShoppingList(Recipe recipe) {
+    setState(() {
+      widget.shoppingList.recipesList.add(
+        ShoppingRecipeItem(
+          name: recipe.name,
+          checked: false,
+          ingredients: recipe.ingredients,
+        ),
+      );
+    });
   }
 
   @override
@@ -109,16 +136,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              openAddShoppingItemScreen(context);
+              selectAddButton();
             },
           ),
         ],
       ),
-      body: ListOfShoppingLists(
+      body: ListOfShoppingItems(
         shoppingList: widget.shoppingList.list,
-        onCheckboxChanged: changeItemSelection,
-        onRemoveItem: removeItem,
-        onEditItem: editItem,
+        recipesList: widget.shoppingList.recipesList,
       ),
     );
   }

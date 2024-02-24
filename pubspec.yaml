@@ -21,6 +21,7 @@ dependencies:
   firebase_messaging: ^14.7.10
   firebase_storage: ^11.6.0
   flex_seed_scheme: ^1.4.0
+  beautiful_soup_dart: ^0.3.0
 
 dev_dependencies:
   flutter_test:
