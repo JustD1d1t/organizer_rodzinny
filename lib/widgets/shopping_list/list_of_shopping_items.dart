@@ -88,8 +88,11 @@ class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
   Widget build(BuildContext context) {
     return BlocBuilder<ShoppingListBloc, ShoppingListState>(
       builder: (context, state) {
-        print(state.shoppingListItems);
-        List<ShoppingListItem> shoppingList = state.shoppingListItems;
+        // TODO: listen to state.shoppingListItems, not state.shoppingLists
+        List<ShoppingListItem> shoppingList = state.shoppingLists
+            .where((shoppingList) => shoppingList.id == widget.shoppingListId)
+            .single
+            .list;
         List<ShoppingRecipeIngredient> recipesList =
             state.shoppingRecipeIngredients;
         final List<dynamic> allShoppingItems = [

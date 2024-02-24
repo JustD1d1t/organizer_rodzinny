@@ -69,13 +69,15 @@ class ShoppingListBloc
         shoppingListIndex,
         updatedShoppingList,
       );
+
+    await FirestoreRepository.updateShoppingList(
+      updatedShoppingList,
+    );
+    //TODO: update only shoppingListItems
     emit(
       ShoppingListState(
         shoppingLists: state.shoppingLists,
       ),
-    );
-    await FirestoreRepository.updateShoppingList(
-      updatedShoppingList,
     );
   }
 

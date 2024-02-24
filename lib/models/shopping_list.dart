@@ -10,6 +10,7 @@ const uuid = Uuid();
 // ignore: must_be_immutable
 class ShoppingList extends Equatable {
   final String name;
+  // TODO: remove list and recipesList properties - keep them separate in state in order to prevent multiple sources of truth
   final List<ShoppingListItem> list;
   final List<ShoppingRecipeItem> recipesList;
   String id;
