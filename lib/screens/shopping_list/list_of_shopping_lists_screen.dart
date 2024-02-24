@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:organizer_rodzinny/data/dummy_data.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/add_shopping_list.dart";
@@ -15,10 +15,11 @@ class ListOfShoppingListsScreen extends StatefulWidget {
 }
 
 class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
-  List<ShoppingList> shoppingLists = exampleShoppingLists;
+  List<ShoppingList> shoppingLists = [];
 
   @override
   void initState() {
+    context.read<ShoppingListBloc>().add(GetAllShoppingLists());
     super.initState();
   }
 
@@ -32,7 +33,7 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
         ),
       ),
     );
-    shoppingLists = exampleShoppingLists;
+    shoppingLists = [];
   }
 
   void addList() async {
@@ -91,37 +92,41 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingLists = exampleShoppingLists;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Listy zakupów"),
-        actions: [
-          IconButton(
-            onPressed: addList,
-            icon: const Icon(Icons.add),
+    return BlocBuilder<ShoppingListBloc, ShoppingListState>(
+      builder: (context, state) {
+        List<ShoppingList> shoppingLists = state.shoppingLists;
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("Listy zakupów"),
+            actions: [
+              IconButton(
+                onPressed: addList,
+                icon: const Icon(Icons.add),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: 8.0,
-          right: 8.0,
-          bottom: 8.0,
-        ),
-        child: GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
+          body: Padding(
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+              bottom: 8.0,
+            ),
+            child: GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              children: [
+                for (var shoppingList in shoppingLists)
+                  ShoppingListSingleList(
+                      shoppingList: shoppingList, onSingleListClick: openList),
+              ],
+            ),
           ),
-          children: [
-            for (var shoppingList in shoppingLists)
-              ShoppingListSingleList(
-                  shoppingList: shoppingList, onSingleListClick: openList),
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

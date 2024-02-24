@@ -26,6 +26,7 @@ class _EditShoppingListNameState extends State<EditShoppingListName> {
       ShoppingList(
         list: widget.listToEdit.list,
         name: _shoppingListName,
+        id: '1234',
       ),
     );
   }
