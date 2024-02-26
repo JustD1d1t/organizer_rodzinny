@@ -9,6 +9,8 @@ import 'package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_li
 class ListOfShoppingListsScreen extends StatefulWidget {
   const ListOfShoppingListsScreen({super.key});
 
+  static const id = "list_of_shopping_lists_screen";
+
   @override
   State<ListOfShoppingListsScreen> createState() =>
       _ListOfShoppingListsScreenState();
@@ -24,6 +26,9 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
   }
 
   void openList(ShoppingList shoppingListSingleItem) async {
+    context.read<AppStateBloc>().add(
+          SetCurrentShoppingListId(id: shoppingListSingleItem.id),
+        );
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => ShoppingListScreen(
@@ -121,7 +126,9 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
               children: [
                 for (var shoppingList in shoppingLists)
                   ShoppingListSingleList(
-                      shoppingList: shoppingList, onSingleListClick: openList),
+                    shoppingList: shoppingList,
+                    onSingleListClick: openList,
+                  ),
               ],
             ),
           ),

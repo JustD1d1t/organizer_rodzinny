@@ -24,8 +24,12 @@ class ShoppingList extends Equatable {
     id = id.isEmpty ? uuid.v4() : id;
   }
 
-  ShoppingList copyWith(
-      {String? name, List<ShoppingListItem>? list, String? id}) {
+  ShoppingList copyWith({
+    String? name,
+    List<ShoppingListItem>? list,
+    String? id,
+    List<ShoppingRecipeItem>? recipesList,
+  }) {
     return ShoppingList(
       name: name ?? this.name,
       list: list ?? this.list,

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 
 class ShoppingListSingleItem extends StatefulWidget {
@@ -7,8 +8,10 @@ class ShoppingListSingleItem extends StatefulWidget {
     required this.shoppingListItem,
     required this.onRemoveItem,
     required this.onEditItem,
+    required this.shoppingListId,
   });
 
+  final String shoppingListId;
   final ShoppingListItem shoppingListItem;
   final Function(ShoppingListItem shoppingListItem) onRemoveItem;
   final Function(ShoppingListItem shoppingListItem) onEditItem;
@@ -22,6 +25,15 @@ class _ShoppingListSingleItemState extends State<ShoppingListSingleItem> {
     setState(() {
       widget.shoppingListItem.checked = bool;
     });
+  }
+
+  void removeItem() {
+    context.read<ShoppingListBloc>().add(
+          RemoveItemFromShoppingList(
+            shoppingListItem: widget.shoppingListItem,
+            shoppingListId: widget.shoppingListId,
+          ),
+        );
   }
 
   @override
@@ -63,9 +75,7 @@ class _ShoppingListSingleItemState extends State<ShoppingListSingleItem> {
               ),
               IconButton(
                 icon: const Icon(Icons.delete),
-                onPressed: () {
-                  widget.onRemoveItem(widget.shoppingListItem);
-                },
+                onPressed: removeItem,
               ),
             ],
           ),

@@ -15,6 +15,8 @@ class AddShopingItemScreen extends StatefulWidget {
   final String appBarTitle;
   final ShoppingList shoppingList;
 
+  static const id = "add_shopping_item_screen";
+
   @override
   State<AddShopingItemScreen> createState() => _AddShopingItemScreenState();
 }
@@ -52,10 +54,12 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
               checked: _shoppingItemChecked,
               category: _shoppingItemCategory,
             ),
-            shoppingList: widget.shoppingList!,
+            shoppingList: widget.shoppingList,
           ),
         );
+
     Navigator.of(context).pop();
+    // Navigator.of(context).pushReplacementNamed(ShoppingListScreen.id);
   }
 
   @override

@@ -4,6 +4,8 @@ import 'package:organizer_rodzinny/models/recipe.dart';
 class RecipeDetails extends StatelessWidget {
   const RecipeDetails({super.key, required this.recipe});
 
+  static const id = "recipe_details_screen";
+
   final Recipe recipe;
 
   @override

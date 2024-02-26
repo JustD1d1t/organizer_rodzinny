@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
-import "package:organizer_rodzinny/models/Ingredient.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_item.dart";
@@ -36,9 +35,12 @@ class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
   }
 
   void removeRecipe(ShoppingRecipeItem recipe) {
-    // setState(() {
-    //   recipesList.remove(recipe);
-    // });
+    context.read<ShoppingListBloc>().add(
+          RemoveRecipeItemFromShoppingList(
+            shoppingListId: widget.shoppingListId.toString(),
+            shoppingRecipeItem: recipe,
+          ),
+        );
   }
 
   void removeItem(ShoppingListItem shoppingListItem) {
@@ -93,8 +95,10 @@ class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
             .where((shoppingList) => shoppingList.id == widget.shoppingListId)
             .single
             .list;
-        List<ShoppingRecipeIngredient> recipesList =
-            state.shoppingRecipeIngredients;
+        List<ShoppingRecipeItem> recipesList = state.shoppingLists
+            .where((shoppingList) => shoppingList.id == widget.shoppingListId)
+            .single
+            .recipesList;
         final List<dynamic> allShoppingItems = [
           ...shoppingList,
           ...recipesList
@@ -119,6 +123,7 @@ class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
                         key: ValueKey(allShoppingItems[index].id),
                         child: ShoppingListSingleItem(
                           shoppingListItem: allShoppingItems[index],
+                          shoppingListId: widget.shoppingListId!,
                           onRemoveItem: removeItem,
                           onEditItem: editItem,
                         ),

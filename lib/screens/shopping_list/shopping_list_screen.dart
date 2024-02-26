@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/screens/shopping_list/add_shopping_item_screen.dart";
@@ -22,8 +23,20 @@ class ShoppingListScreen extends StatefulWidget {
 }
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
+  late final ShoppingList shoppingList;
+
+  @override
+  void initState() {
+    final id = context.read<AppStateBloc>().state.currentShoppingListId;
+    shoppingList =
+        context.read<ShoppingListBloc>().state.shoppingLists.firstWhere(
+              (element) => element.id == id,
+            );
+    super.initState();
+  }
+
   void openAddShoppingItemScreen() async {
-    final shoppingListItem = await Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => AddShopingItemScreen(
           appBarTitle: "Dodaj element",
@@ -31,17 +44,16 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
       ),
     );
-
-    if (shoppingListItem != null) {
-      setState(() {
-        widget.shoppingList.list.add(shoppingListItem);
-      });
-    }
-  }
-
-  void removeList() {
-    Navigator.of(context).pop();
-    widget.onRemoveList(widget.shoppingList);
+    context.read<ShoppingListBloc>().state.shoppingLists.firstWhere(
+          (element) => element.id == widget.shoppingList.id,
+        );
+    setState(() {
+      final id = context.read<AppStateBloc>().state.currentShoppingListId;
+      shoppingList =
+          context.read<ShoppingListBloc>().state.shoppingLists.firstWhere(
+                (element) => element.id == id,
+              );
+    });
   }
 
   void removeRecipe(ShoppingRecipeItem recipe) {
@@ -74,6 +86,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       MaterialPageRoute(
         builder: (ctx) => AddShoppingRecipeScreen(
           addRecipe: addRecipeToShoppingList,
+          shoppingList: widget.shoppingList,
         ),
       ),
     );
@@ -117,6 +130,11 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
       );
     });
+  }
+
+  void removeList() {
+    Navigator.of(context).pop();
+    widget.onRemoveList(widget.shoppingList);
   }
 
   @override

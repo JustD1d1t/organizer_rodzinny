@@ -3,6 +3,8 @@ import "package:flutter/material.dart";
 class PantryScreen extends StatelessWidget {
   const PantryScreen({super.key});
 
+  static const id = "pantry_screen";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

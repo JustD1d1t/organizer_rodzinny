@@ -5,6 +5,8 @@ import 'package:organizer_rodzinny/widgets/finances/charts.dart';
 class FinancesScreen extends StatelessWidget {
   const FinancesScreen({super.key});
 
+  static const id = "finances_screen";
+
   @override
   Widget build(BuildContext context) {
     final budget = availableBudget;

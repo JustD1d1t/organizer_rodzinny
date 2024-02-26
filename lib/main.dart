@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => ShoppingListBloc()),
         BlocProvider(create: (context) => RecipesBloc()),
+        BlocProvider(create: (context) => AppStateBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData.from(
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
             }
 
             if (snapshot.hasData) {
+              context
+                  .read<AppStateBloc>()
+                  .add(SetUserId(id: snapshot.data!.uid));
               GetStorage().write('uid', snapshot.data!.uid);
               return const MainScreen();
             }
@@ -68,6 +72,7 @@ class MyApp extends StatelessWidget {
             return const AuthScreen();
           },
         ),
+        onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );
   }

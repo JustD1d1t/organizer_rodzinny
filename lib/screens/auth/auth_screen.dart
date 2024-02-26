@@ -7,6 +7,8 @@ final _firebase = FirebaseAuth.instance;
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
+  static const id = "auth_screen";
+
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }

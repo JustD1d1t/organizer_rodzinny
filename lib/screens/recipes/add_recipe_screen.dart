@@ -6,6 +6,8 @@ import "package:organizer_rodzinny/widgets/recipes/add_ingredient.dart";
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({super.key});
 
+  static const id = "add_recipe_screen";
+
   @override
   State<AddRecipeScreen> createState() => _AddRecipeScreenState();
 }
