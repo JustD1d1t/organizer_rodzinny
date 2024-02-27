@@ -1,45 +1,21 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
+import 'package:organizer_rodzinny/data/dummy_data.dart';
+import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
-
-enum Category {
-  bread(label: "Pieczywo"),
-  dairy(label: "Nabiał"),
-  fruit(label: "Owoce"),
-  vegetables(label: "Warzywa"),
-  meat(label: "Mięso"),
-  fish(label: "Ryby"),
-  sweets(label: "Słodycze"),
-  drinks(label: "Napoje"),
-  alcohol(label: "Alkohol"),
-  loose(label: "Produkty sypkie"),
-  other(label: "Inne");
-
-  const Category({required this.label});
-
-  final String label;
-}
-
-enum Unit {
-  kg(label: "kg"),
-  dag(label: "dag"),
-  g(label: "g"),
-  l(label: "l"),
-  ml(label: "ml"),
-  szt(label: "szt");
-
-  const Unit({required this.label});
-
-  final String label;
-}
 
 class AddShopingItemScreen extends StatefulWidget {
   const AddShopingItemScreen({
     super.key,
     required this.appBarTitle,
+    required this.shoppingList,
     this.shoppingListItem,
   });
   final ShoppingListItem? shoppingListItem;
   final String appBarTitle;
+  final ShoppingList shoppingList;
+
+  static const id = "add_shopping_item_screen";
 
   @override
   State<AddShopingItemScreen> createState() => _AddShopingItemScreenState();
@@ -49,8 +25,6 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _shoppingItemName;
-  // var _shoppingItemQuantity = 0.0;
-  // var _shoppingItemUnit;
   var _shoppingItemCategory;
   var _shoppingItemChecked;
 
@@ -59,10 +33,6 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
     super.initState();
     if (widget.shoppingListItem != null) {
       _shoppingItemName = widget.shoppingListItem!.name;
-      // if (widget.shoppingListItem!.quantity != null) {
-      //   _shoppingItemQuantity = widget.shoppingListItem!.quantity!;
-      // }
-      // _shoppingItemUnit = widget.shoppingListItem!.unit;
       _shoppingItemCategory = widget.shoppingListItem!.category;
       _shoppingItemChecked = widget.shoppingListItem!.checked;
     } else {
@@ -77,16 +47,19 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
     }
 
     _formKey.currentState!.save();
+    context.read<ShoppingListBloc>().add(
+          AddItemToShoppingList(
+            shoppingListItem: ShoppingListItem(
+              name: _shoppingItemName,
+              checked: _shoppingItemChecked,
+              category: _shoppingItemCategory,
+            ),
+            shoppingList: widget.shoppingList,
+          ),
+        );
 
-    Navigator.of(context).pop(
-      ShoppingListItem(
-        name: _shoppingItemName,
-        // quantity: _shoppingItemQuantity,
-        // unit: _shoppingItemUnit,
-        checked: _shoppingItemChecked,
-        category: _shoppingItemCategory,
-      ),
-    );
+    Navigator.of(context).pop();
+    // Navigator.of(context).pushReplacementNamed(ShoppingListScreen.id);
   }
 
   @override
@@ -100,7 +73,9 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text('Dodaj własny produkt'),
               TextFormField(
                 decoration: const InputDecoration(labelText: "Nazwa"),
                 maxLength: 30,
@@ -119,47 +94,6 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                   _shoppingItemName = value!;
                 },
               ),
-              // DropdownButtonFormField(
-              //   decoration: const InputDecoration(labelText: "Jednostka"),
-              //   value: _shoppingItemUnit,
-              //   isExpanded: true,
-              //   icon: const Icon(Icons.arrow_downward),
-              //   style: Theme.of(context).textTheme.bodyLarge,
-              //   onChanged: (value) => setState(() {
-              //     _shoppingItemUnit = value;
-              //   }),
-              //   items: Unit.values
-              //       .asMap()
-              //       .entries
-              //       .map<DropdownMenuItem<String>>((unit) {
-              //     return DropdownMenuItem<String>(
-              //       value: unit.value.label.toString(),
-              //       child: Text(unit.value.label.toString()),
-              //     );
-              //   }).toList(),
-              // ),
-              // TextFormField(
-              //   decoration: const InputDecoration(labelText: "Ilość"),
-              //   maxLength: 100,
-              //   initialValue: _shoppingItemQuantity % 1 == 0
-              //       ? _shoppingItemQuantity.toInt().toString()
-              //       : _shoppingItemQuantity.toStringAsFixed(2),
-              //   keyboardType: TextInputType.number,
-              //   inputFormatters: [
-              //     FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))
-              //   ],
-              //   validator: (value) {
-              //     if (value == null ||
-              //         value.isEmpty ||
-              //         double.parse(value) < 0) {
-              //       return 'Musisz podać ilość.';
-              //     }
-              //     return null;
-              //   },
-              //   onSaved: (value) {
-              //     _shoppingItemQuantity = double.parse(value!);
-              //   },
-              // ),
               DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: "Kategoria"),
                   value: _shoppingItemCategory,
@@ -169,15 +103,21 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                   onChanged: (value) => setState(() {
                         _shoppingItemCategory = value;
                       }),
-                  items: Category.values
-                      .asMap()
-                      .entries
-                      .map<DropdownMenuItem<String>>((category) {
-                    return DropdownMenuItem<String>(
-                      value: category.value.label.toString(),
-                      child: Text(category.value.label.toString()),
-                    );
-                  }).toList()),
+                  // items: Category.values
+                  //     .asMap()
+                  //     .entries
+                  //     .map<DropdownMenuItem<String>>((category) {
+                  //   return DropdownMenuItem<String>(
+                  //     value: category.value.label.toString(),
+                  //     child: Text(category.value.label.toString()),
+                  //   );
+                  // }).toList()),
+                  items: availableCategories
+                      .map((cat) => DropdownMenuItem<String>(
+                            value: cat['name'].toString(),
+                            child: Text(cat['name'].toString()),
+                          ))
+                      .toList()),
               const SizedBox(
                 height: 10,
               ),
@@ -185,11 +125,28 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: _saveForm,
+                    onPressed: () {
+                      _saveForm();
+                    },
                     child: const Text("Zapisz"),
                   ),
                 ],
               ),
+              const Text('Wybierz z listy'),
+              ...availableCategories
+                  .map(
+                    (cat) => ListTile(
+                      title: Text(cat['name'].toString()),
+                      onTap: () {
+                        // setState(() {
+                        //   _shoppingItemName = cat['name'].toString();
+                        //   _shoppingItemCategory = cat['name'].toString();
+                        // });
+                      },
+                      trailing: const Icon(Icons.arrow_forward),
+                    ),
+                  )
+                  .toList(),
             ],
           ),
         ),

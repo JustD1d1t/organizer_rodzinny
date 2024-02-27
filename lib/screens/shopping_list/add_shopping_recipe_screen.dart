@@ -1,11 +1,16 @@
 import "package:flutter/material.dart";
 import 'package:organizer_rodzinny/data/dummy_data.dart';
+import 'package:organizer_rodzinny/models/shopping_list.dart';
 import 'package:organizer_rodzinny/widgets/shopping_list/recipe_item_to_shopping_list.dart';
 
 class AddShoppingRecipeScreen extends StatefulWidget {
-  const AddShoppingRecipeScreen({super.key, required this.addRecipe});
+  const AddShoppingRecipeScreen(
+      {super.key, required this.addRecipe, required this.shoppingList});
 
   final Function addRecipe;
+  final ShoppingList shoppingList;
+
+  static const id = "add_shopping_recipe_screen";
 
   @override
   State<AddShoppingRecipeScreen> createState() =>
@@ -27,7 +32,10 @@ class _AddShoppingRecipeScreenState extends State<AddShoppingRecipeScreen> {
           itemCount: recipes.length,
           itemBuilder: (ctx, index) {
             return RecipeItemToShoppingList(
-                recipe: recipes[index], addRecipe: widget.addRecipe);
+              recipe: recipes[index],
+              addRecipe: widget.addRecipe,
+              shoppingList: widget.shoppingList,
+            );
           },
           separatorBuilder: (context, index) => const SizedBox(
             height: 10,

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 
 class AddShoppingList extends StatefulWidget {
@@ -13,17 +14,31 @@ class _AddShoppingListState extends State<AddShoppingList> {
 
   var _shoppingListName = "";
 
-  void _saveForm() {
+  void _saveForm(BuildContext context) {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
     _formKey.currentState!.save();
 
+    context.read<ShoppingListBloc>().add(
+          AddShoppingListEvent(
+            shoppingList: ShoppingList(
+              name: _shoppingListName,
+              list: const [],
+              id: '',
+              recipesList: const [],
+            ),
+          ),
+        );
+    context.read<ShoppingListBloc>().add(GetAllShoppingLists());
+
     Navigator.of(context).pop(
       ShoppingList(
         list: [],
         name: _shoppingListName,
+        recipesList: [],
+        id: '123',
       ),
     );
   }
@@ -59,7 +74,9 @@ class _AddShoppingListState extends State<AddShoppingList> {
               },
             ),
             ElevatedButton(
-              onPressed: _saveForm,
+              onPressed: () {
+                _saveForm(context);
+              },
               child: const Text("Dodaj listę"),
             ),
           ],

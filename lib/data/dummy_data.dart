@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/Ingredient.dart";
 import 'package:organizer_rodzinny/models/recipe.dart';
-import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import 'package:organizer_rodzinny/models/tile.dart';
 
@@ -54,6 +53,32 @@ final availableTiles = [
     subtitle: "Twoja spiżarnia",
     name: 'pantry',
   ),
+];
+
+final availableCategories = [
+  {
+    'name': "Napoje",
+    'items': [
+      ShoppingListItem(name: 'Ale', category: 'Napoje', checked: false),
+      ShoppingListItem(name: 'Białe wino', category: 'Napoje', checked: false),
+      ShoppingListItem(name: 'Cola', category: 'Napoje', checked: false),
+      ShoppingListItem(
+          name: 'Czerwone wino', category: 'Napoje', checked: false),
+    ]
+  },
+  {
+    'name': "Owoce i Warzywa",
+  },
+  {'name': "Chleb i inne wypieki"},
+  {'name': "Mleko i ser"},
+  {'name': "Mięso i ryba"},
+  {'name': "Składniki i przyprawy"},
+  {'name': "Mrożonki i garmażeria"},
+  {'name': "Produkty zbożowe"},
+  {'name': "Przekąski i słodycze"},
+  {'name': "Gospodarstwo domowe"},
+  {'name': "Zdrowie"},
+  {'name': "Artkykuły dla zwierząt"},
 ];
 
 final availableRecipes = [
@@ -125,140 +150,6 @@ final availableRecipes = [
       "Ziemniaki odcedzić, podawać z kotletami i surówką z marchewki",
     ],
   ),
-];
-
-final exampleShoppingLists = [
-  ShoppingList(
-    name: "Biedronka",
-    list: [
-      ShoppingListItem(
-        name: "Bułki",
-        // quantity: 2,
-        // unit: "szt",
-        checked: false,
-        category: "Pieczywo",
-      ),
-      ShoppingListItem(
-        name: "Mleko",
-        // quantity: 1,
-        // unit: "l",
-        checked: false,
-        category: "Nabiał",
-      ),
-      ShoppingListItem(
-        name: "Jogurt",
-        // quantity: 2,
-        // unit: "",
-        checked: false,
-        category: "Nabiał",
-      ),
-      ShoppingListItem(
-        name: "Ser",
-        // quantity: null,
-        // unit: "kg",
-        checked: false,
-        category: null,
-      ),
-      ShoppingListItem(
-        name: "Szynka",
-        // quantity: 0.5,
-        // unit: null,
-        checked: false,
-        category: null,
-      ),
-      ShoppingListItem(
-        name: "Pomidory",
-        // quantity: null,
-        // unit: null,
-        checked: false,
-        category: "Warzywa",
-      ),
-      ShoppingListItem(
-        name: "Ogórki",
-        // quantity: 1,
-        // unit: "kg",
-        checked: false,
-        category: "Warzywa",
-      ),
-      ShoppingListItem(
-        name: "Papryka",
-        // quantity: 1,
-        // unit: "kg",
-        checked: false,
-        category: "Warzywa",
-      ),
-      ShoppingListItem(
-        name: "Cebula",
-        // quantity: 1,
-        // unit: "kg",
-        checked: false,
-        category: "Warzywa",
-      ),
-      ShoppingListItem(
-        name: "Marchewka",
-        // quantity: 1,
-        // unit: "kg",
-        checked: false,
-        category: "Warzywa",
-      ),
-      ShoppingListItem(
-        name: "Ziemniaki",
-        // quantity: 2,
-        // unit: "kg",
-        checked: false,
-        category: "Warzywa",
-      ),
-      ShoppingListItem(
-        name: "Chleb",
-        // quantity: 1,
-        // unit: "szt",
-        checked: false,
-        category: "Pieczywo",
-      ),
-      ShoppingListItem(
-        name: "Mąka",
-        // quantity: 1,
-        // unit: "kg",
-        checked: false,
-        category: "Produkty sypkie",
-      ),
-      ShoppingListItem(
-        name: "Makaron",
-        // quantity: 1,
-        // unit: "kg",
-        checked: false,
-        category: "Produkty sypkie",
-      ),
-    ],
-    recipesList: [
-      ShoppingRecipeItem(
-        name: "Kotleciki z jajek a la carbonara",
-        description: null,
-        ingredients: [
-          ShoppingRecipeIngredient(
-              name: "wędzony szynka", amount: 100.0, unit: "g", checked: false),
-          ShoppingRecipeIngredient(
-              name: "jajka", amount: 4.0, unit: "szt", checked: false),
-          ShoppingRecipeIngredient(
-              name: "ser parmezan", amount: 50.0, unit: "g", checked: false),
-          ShoppingRecipeIngredient(
-              name: "śmietana", amount: 200.0, unit: "ml", checked: false),
-          ShoppingRecipeIngredient(
-              name: "makaron spaghetti",
-              amount: 400.0,
-              unit: "g",
-              checked: false),
-          ShoppingRecipeIngredient(
-              name: "masło", amount: 50.0, unit: "g", checked: false),
-          ShoppingRecipeIngredient(
-              name: "sól", amount: 1.0, unit: "szczypta", checked: false),
-          ShoppingRecipeIngredient(
-              name: "pieprz", amount: 1.0, unit: "szczypta", checked: false),
-        ],
-        checked: false,
-      )
-    ],
-  )
 ];
 
 final availableBudget = {

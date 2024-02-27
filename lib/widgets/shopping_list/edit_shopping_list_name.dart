@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 
 class EditShoppingListName extends StatefulWidget {
@@ -22,12 +23,13 @@ class _EditShoppingListNameState extends State<EditShoppingListName> {
     }
     _formKey.currentState!.save();
 
-    Navigator.of(context).pop(
-      ShoppingList(
-        list: widget.listToEdit.list,
-        name: _shoppingListName,
-      ),
-    );
+    context.read<ShoppingListBloc>().add(
+          EditShoppingListNameEvent(
+            listToEdit: widget.listToEdit,
+            shoppingListName: _shoppingListName,
+          ),
+        );
+    Navigator.of(context).pop();
   }
 
   @override

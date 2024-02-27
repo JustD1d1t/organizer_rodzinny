@@ -12,6 +12,8 @@ class ShoppingListReceipeIngredients extends StatefulWidget {
   final Recipe? recipe;
   final String appBarTitle;
 
+  static const id = "shopping_list_receipe_ingredients";
+
   @override
   State<ShoppingListReceipeIngredients> createState() =>
       _ShoppingListReceipeIngredientsState();

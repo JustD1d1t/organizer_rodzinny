@@ -1,12 +1,45 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
+import "package:organizer_rodzinny/models/shopping_list.dart";
 
 class RecipeItemToShoppingList extends StatelessWidget {
   const RecipeItemToShoppingList(
-      {super.key, required this.recipe, required this.addRecipe});
+      {super.key,
+      required this.recipe,
+      required this.addRecipe,
+      required this.shoppingList});
 
   final Recipe recipe;
   final Function addRecipe;
+  final ShoppingList shoppingList;
+
+  void addRecipeToShoppingList(BuildContext context, Recipe recipe) {
+    context.read<ShoppingListBloc>().add(
+          AddRecipeToShoppingList(
+            shoppingRecipeItem: ShoppingRecipeItem(
+              name: recipe.name,
+              ingredients: recipe.ingredients,
+              description: recipe.description,
+              steps: recipe.steps,
+              checked: false,
+            ),
+            shoppingList: shoppingList,
+          ),
+        );
+    // context.read<ShoppingListBloc>().add(
+    //       AddRecipeToShoppingList(
+    //         shoppingRecipeItem: ShoppingRecipeItem(
+    //           name: recipe.name,
+    //           ingredients: recipe.ingredients,
+    //           description: recipe.description,
+    //           steps: recipe.steps,
+    //           checked: false,
+    //         ),
+    //         shoppingList: shoppingList,
+    //       ),
+    //     );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +56,7 @@ class RecipeItemToShoppingList extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.add),
               onPressed: () {
-                addRecipe(recipe);
+                addRecipeToShoppingList(context, recipe);
               },
             ),
           ],

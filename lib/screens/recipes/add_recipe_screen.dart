@@ -6,6 +6,8 @@ import "package:organizer_rodzinny/widgets/recipes/add_ingredient.dart";
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({super.key});
 
+  static const id = "add_recipe_screen";
+
   @override
   State<AddRecipeScreen> createState() => _AddRecipeScreenState();
 }
@@ -74,9 +76,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       );
 
       if (recipe != null) {
-        print(recipe.name);
-        print(recipe.ingredients);
-        print(recipe.steps);
         Navigator.of(context).pop(recipe);
       }
     }

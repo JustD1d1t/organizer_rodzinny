@@ -30,4 +30,24 @@ class ShoppingRecipeItem extends Recipe {
             ingredients: ingredients,
             steps: steps);
   bool checked;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'ingredients': ingredients,
+      'steps': steps,
+      'checked': checked,
+    };
+  }
+
+  factory ShoppingRecipeItem.fromMap(Map<String, dynamic> map) {
+    return ShoppingRecipeItem(
+      name: map['name'],
+      description: map['description'],
+      ingredients: List<dynamic>.from(map['ingredients']),
+      steps: List<dynamic>.from(map['steps']),
+      checked: map['checked'],
+    );
+  }
 }

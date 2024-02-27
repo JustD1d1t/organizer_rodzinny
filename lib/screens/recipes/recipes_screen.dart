@@ -7,6 +7,8 @@ import "package:organizer_rodzinny/widgets/recipes/recipes_list.dart";
 class RecipesScreen extends StatefulWidget {
   const RecipesScreen({super.key});
 
+  static const id = "recipes_screen";
+
   @override
   State<RecipesScreen> createState() => _RecipesScreenState();
 }
