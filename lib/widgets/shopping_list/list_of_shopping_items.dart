@@ -3,88 +3,25 @@ import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_item.dart";
-import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_recipe.dart";
 
 class ListOfShoppingItems extends StatefulWidget {
   const ListOfShoppingItems({
     super.key,
     this.shoppingListId,
     required this.shoppingList,
-    required this.recipesList,
+    // required this.recipesList,
   });
 
   final String? shoppingListId;
   final List<ShoppingListItem> shoppingList;
-  final List<ShoppingRecipeItem> recipesList;
+  // final List<ShoppingRecipeItem> recipesList;
 
   @override
   State<ListOfShoppingItems> createState() => _ListOfShoppingItemsState();
 }
 
 class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
-  List<ShoppingListItem> shoppingList = [];
-  List<ShoppingRecipeItem> recipesList = [];
-  @override
-  void initState() {
-    context.read<ShoppingListBloc>().add(
-          GetShoppingListItems(
-            shoppingListId: widget.shoppingListId.toString(),
-          ),
-        );
-    super.initState();
-  }
-
-  void removeRecipe(ShoppingRecipeItem recipe) {
-    context.read<ShoppingListBloc>().add(
-          RemoveRecipeItemFromShoppingList(
-            shoppingListId: widget.shoppingListId.toString(),
-            shoppingRecipeItem: recipe,
-          ),
-        );
-  }
-
-  void removeItem(ShoppingListItem shoppingListItem) {
-    // final itemIndex = shoppingList.indexOf(shoppingListItem);
-    // setState(() {
-    //   shoppingList.remove(shoppingListItem);
-    // });
-    // ScaffoldMessenger.of(context).clearSnackBars();
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     content: Text('${shoppingListItem.name} usunięte'),
-    //     duration: const Duration(seconds: 3),
-    //     action: SnackBarAction(
-    //       label: 'Cofnij',
-    //       onPressed: () {
-    //         setState(() {
-    //           shoppingList.insert(
-    //             itemIndex,
-    //             shoppingListItem,
-    //           );
-    //         });
-    //       },
-    //     ),
-    //   ),
-    // );
-  }
-
-  void editItem(ShoppingListItem shoppingListItem) async {
-    // final id = shoppingListItem.id;
-    // final index = widget.shoppingList.indexWhere((element) => element.id == id);
-    // final editingShoppingListItem = widget.shoppingList[index];
-    // final ShoppingListItem editedShoppingListItem =
-    //     await Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (ctx) => AddShopingItemScreen(
-    //       shoppingListItem: editingShoppingListItem,
-    //       appBarTitle: "Edytuj element",
-    //     ),
-    //   ),
-    // );
-    // setState(() {
-    //   widget.shoppingList[index] = editedShoppingListItem;
-    // });
-  }
+  void removeRecipe(ShoppingRecipeItem recipe) {}
 
   @override
   Widget build(BuildContext context) {
@@ -95,13 +32,12 @@ class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
             .where((shoppingList) => shoppingList.id == widget.shoppingListId)
             .single
             .list;
-        List<ShoppingRecipeItem> recipesList = state.shoppingLists
-            .where((shoppingList) => shoppingList.id == widget.shoppingListId)
-            .single
-            .recipesList;
+        // List<ShoppingRecipeItem> recipesList = state.shoppingLists
+        //     .where((shoppingList) => shoppingList.id == widget.shoppingListId)
+        //     .single
+        //     .recipesList;
         final List<dynamic> allShoppingItems = [
           ...shoppingList,
-          ...recipesList
         ];
         return Padding(
           padding: const EdgeInsets.only(
@@ -116,29 +52,15 @@ class _ListOfShoppingItemsState extends State<ListOfShoppingItems> {
                   itemCount: allShoppingItems.length,
                   itemBuilder: (context, index) {
                     if (allShoppingItems[index] is ShoppingListItem) {
-                      return Dismissible(
-                        onDismissed: (direction) {
-                          removeItem(allShoppingItems[index]);
-                        },
-                        key: ValueKey(allShoppingItems[index].id),
-                        child: ShoppingListSingleItem(
-                          shoppingListItem: allShoppingItems[index],
-                          shoppingListId: widget.shoppingListId!,
-                          onRemoveItem: removeItem,
-                          onEditItem: editItem,
-                        ),
+                      return ShoppingListSingleItem(
+                        shoppingListItem: allShoppingItems[index],
+                        shoppingListId: widget.shoppingListId!,
                       );
                     } else {
-                      return Dismissible(
-                        onDismissed: (direction) {
-                          removeRecipe(allShoppingItems[index]);
-                        },
-                        key: ValueKey(allShoppingItems[index].id),
-                        child: ShoppingListSingleRecipe(
-                          recipe: allShoppingItems[index],
-                          onRemoveItem: removeRecipe,
-                        ),
-                      );
+                      // return ShoppingListSingleRecipe(
+                      //   recipe: allShoppingItems[index],
+                      //   shoppingListId: widget.shoppingListId!,
+                      // );
                     }
                   },
                   separatorBuilder: (context, index) => const SizedBox(

@@ -1,13 +1,25 @@
 import "package:flutter/material.dart";
+import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
+import "package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart";
 
 class ShoppingListSingleList extends StatelessWidget {
-  const ShoppingListSingleList(
-      {super.key, required this.shoppingList, required this.onSingleListClick});
+  const ShoppingListSingleList({super.key, required this.shoppingList});
 
   final ShoppingList shoppingList;
-  final Function onSingleListClick;
+
+  void openList(
+      BuildContext context, ShoppingList shoppingListSingleItem) async {
+    context.read<AppStateBloc>().add(
+          SetCurrentShoppingListId(id: shoppingList.id),
+        );
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => const ShoppingListScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +46,7 @@ class ShoppingListSingleList extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
-          onSingleListClick(shoppingList);
+          openList(context, shoppingList);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

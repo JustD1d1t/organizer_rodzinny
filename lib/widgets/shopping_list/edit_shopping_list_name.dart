@@ -22,7 +22,6 @@ class _EditShoppingListNameState extends State<EditShoppingListName> {
       return;
     }
     _formKey.currentState!.save();
-
     context.read<ShoppingListBloc>().add(
           EditShoppingListNameEvent(
             listToEdit: widget.listToEdit,

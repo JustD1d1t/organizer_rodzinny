@@ -1,7 +1,5 @@
 import "package:flutter/material.dart";
-import "package:organizer_rodzinny/models/Ingredient.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
-import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_recipe_ingredient.dart";
 
 class ShoppingListReceipeIngredients extends StatefulWidget {
   const ShoppingListReceipeIngredients({
@@ -9,7 +7,7 @@ class ShoppingListReceipeIngredients extends StatefulWidget {
     required this.appBarTitle,
     required this.recipe,
   });
-  final Recipe? recipe;
+  final ShoppingRecipeItem recipe;
   final String appBarTitle;
 
   static const id = "shopping_list_receipe_ingredients";
@@ -21,31 +19,6 @@ class ShoppingListReceipeIngredients extends StatefulWidget {
 
 class _ShoppingListReceipeIngredientsState
     extends State<ShoppingListReceipeIngredients> {
-  void removeIngredient(ShoppingRecipeIngredient ingredient) {
-    final itemIndex = widget.recipe!.ingredients.indexOf(ingredient);
-    setState(() {
-      widget.recipe!.ingredients.remove(ingredient);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${ingredient.name} usunięte'),
-        duration: const Duration(seconds: 3),
-        action: SnackBarAction(
-          label: 'Cofnij',
-          onPressed: () {
-            setState(() {
-              widget.recipe!.ingredients.insert(
-                itemIndex,
-                ingredient,
-              );
-            });
-          },
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget content = const Column(
@@ -60,18 +33,18 @@ class _ShoppingListReceipeIngredientsState
       ],
     );
 
-    if (widget.recipe!.ingredients.isNotEmpty) {
-      content = ListView.separated(
-        itemCount: widget.recipe!.ingredients.length,
-        itemBuilder: (context, index) => ShoppingListSingleRecipeIngredient(
-          ingredient: widget.recipe!.ingredients[index],
-          onRemoveItem: removeIngredient,
-        ),
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 10,
-        ),
-      );
-    }
+    // if (widget.recipe.ingredients.isNotEmpty) {
+    //   content = ListView.separated(
+    //     itemCount: widget.recipe.ingredients.length,
+    //     itemBuilder: (context, index) => ShoppingListSingleRecipeIngredient(
+    //       ingredient: widget.recipe.ingredients[index],
+    //       recipe: widget.recipe,
+    //     ),
+    //     separatorBuilder: (context, index) => const SizedBox(
+    //       height: 10,
+    //     ),
+    //   );
+    // }
 
     return Scaffold(
       appBar: AppBar(

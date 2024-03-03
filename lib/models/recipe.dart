@@ -25,11 +25,14 @@ class ShoppingRecipeItem extends Recipe {
     List<dynamic>? steps,
     required this.checked,
   }) : super(
-            name: name,
-            description: description,
-            ingredients: ingredients,
-            steps: steps);
+          name: name,
+          description: description,
+          ingredients: ingredients,
+          steps: steps,
+        );
   bool checked;
+  @override
+  String id = uuid.v4();
 
   Map<String, dynamic> toMap() {
     return {
