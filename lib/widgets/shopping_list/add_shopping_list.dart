@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
+import "package:organizer_rodzinny/models/shopping_list_item.dart";
 
 class AddShoppingList extends StatefulWidget {
   const AddShoppingList({super.key});
@@ -21,24 +21,11 @@ class _AddShoppingListState extends State<AddShoppingList> {
     }
     _formKey.currentState!.save();
 
-    context.read<ShoppingListBloc>().add(
-          AddShoppingListEvent(
-            shoppingList: ShoppingList(
-              name: _shoppingListName,
-              list: const [],
-              id: '',
-              recipesList: const [],
-            ),
-          ),
-        );
-    context.read<ShoppingListBloc>().add(GetAllShoppingLists());
-
     Navigator.of(context).pop(
       ShoppingList(
-        list: [],
+        list: <ShoppingListItem>[],
         name: _shoppingListName,
-        recipesList: [],
-        id: '123',
+        id: "",
       ),
     );
   }

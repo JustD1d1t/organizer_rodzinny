@@ -7,38 +7,8 @@ abstract class ShoppingListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllShoppingLists extends ShoppingListEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class GetShoppingListItems extends ShoppingListEvent {
-  final String shoppingListId;
-  const GetShoppingListItems({required this.shoppingListId});
-  @override
-  List<Object> get props => [shoppingListId];
-}
-
-class AddItemToShoppingList extends ShoppingListEvent {
-  final ShoppingListItem shoppingListItem;
-  final ShoppingList shoppingList;
-
-  const AddItemToShoppingList(
-      {required this.shoppingListItem, required this.shoppingList});
-
-  @override
-  List<Object> get props => [shoppingListItem, shoppingList];
-}
-
-class AddRecipeToShoppingList extends ShoppingListEvent {
-  final ShoppingRecipeItem shoppingRecipeItem;
-  final ShoppingList shoppingList;
-
-  const AddRecipeToShoppingList(
-      {required this.shoppingRecipeItem, required this.shoppingList});
-
-  @override
-  List<Object> get props => [shoppingRecipeItem, shoppingList];
+class LoadShoppingListsEvent extends ShoppingListEvent {
+  const LoadShoppingListsEvent();
 }
 
 class AddShoppingListEvent extends ShoppingListEvent {
@@ -50,13 +20,15 @@ class AddShoppingListEvent extends ShoppingListEvent {
   List<Object> get props => [shoppingList];
 }
 
-class RemoveShoppingListEvent extends ShoppingListEvent {
-  final ShoppingList shoppingList;
+class AddItemToShoppingList extends ShoppingListEvent {
+  final ShoppingListItem shoppingListItem;
+  final String shoppingListId;
 
-  const RemoveShoppingListEvent({required this.shoppingList});
+  const AddItemToShoppingList(
+      {required this.shoppingListItem, required this.shoppingListId});
 
   @override
-  List<Object> get props => [shoppingList];
+  List<Object> get props => [shoppingListItem, shoppingListId];
 }
 
 class RemoveItemFromShoppingList extends ShoppingListEvent {
@@ -70,15 +42,41 @@ class RemoveItemFromShoppingList extends ShoppingListEvent {
   List<Object> get props => [shoppingListItem, shoppingListId];
 }
 
-class RemoveRecipeItemFromShoppingList extends ShoppingListEvent {
+class AddRecipeToShoppingList extends ShoppingListEvent {
   final ShoppingRecipeItem shoppingRecipeItem;
   final String shoppingListId;
 
-  const RemoveRecipeItemFromShoppingList(
+  const AddRecipeToShoppingList(
       {required this.shoppingRecipeItem, required this.shoppingListId});
 
   @override
   List<Object> get props => [shoppingRecipeItem, shoppingListId];
+}
+
+class RemoveRecipeFromShoppingList extends ShoppingListEvent {
+  final ShoppingRecipeItem shoppingRecipeItem;
+  final String shoppingListId;
+
+  const RemoveRecipeFromShoppingList(
+      {required this.shoppingRecipeItem, required this.shoppingListId});
+
+  @override
+  List<Object> get props => [shoppingRecipeItem, shoppingListId];
+}
+
+class RemoveIngredientFromShoppingRecipeItem extends ShoppingListEvent {
+  final String shoppingListId;
+  final ShoppingRecipeItem shoppingRecipeItem;
+  final ShoppingRecipeIngredient shoppingRecipeIngredient;
+
+  const RemoveIngredientFromShoppingRecipeItem(
+      {required this.shoppingListId,
+      required this.shoppingRecipeItem,
+      required this.shoppingRecipeIngredient});
+
+  @override
+  List<Object> get props =>
+      [shoppingListId, shoppingRecipeItem, shoppingRecipeIngredient];
 }
 
 class EditShoppingListNameEvent extends ShoppingListEvent {
@@ -90,4 +88,13 @@ class EditShoppingListNameEvent extends ShoppingListEvent {
 
   @override
   List<Object> get props => [listToEdit, shoppingListName];
+}
+
+class RemoveShoppingList extends ShoppingListEvent {
+  final String id;
+
+  const RemoveShoppingList({required this.id});
+
+  @override
+  List<Object> get props => [id];
 }

@@ -1,9 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
-import "package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/add_shopping_list.dart";
-import "package:organizer_rodzinny/widgets/shopping_list/edit_shopping_list_name.dart";
 import 'package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_list.dart';
 
 class ListOfShoppingListsScreen extends StatefulWidget {
@@ -17,28 +15,11 @@ class ListOfShoppingListsScreen extends StatefulWidget {
 }
 
 class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
-  List<ShoppingList> shoppingLists = [];
-
   @override
   void initState() {
-    context.read<ShoppingListBloc>().add(GetAllShoppingLists());
+    print('initState');
+    context.read<ShoppingListBloc>().add(const LoadShoppingListsEvent());
     super.initState();
-  }
-
-  void openList(ShoppingList shoppingListSingleItem) async {
-    context.read<AppStateBloc>().add(
-          SetCurrentShoppingListId(id: shoppingListSingleItem.id),
-        );
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => ShoppingListScreen(
-          shoppingList: shoppingListSingleItem,
-          onEditName: changeListName,
-          onRemoveList: removeList,
-        ),
-      ),
-    );
-    shoppingLists = [];
   }
 
   void addList() async {
@@ -48,51 +29,10 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
       context: context,
       builder: (context) => const AddShoppingList(),
     );
-    if (list != null) {
-      setState(() {
-        shoppingLists.add(list);
-      });
-    }
-  }
-
-  void removeList(ShoppingList list) {
-    final listIndex = shoppingLists.indexOf(list);
-    setState(() {
-      shoppingLists.remove(list);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${list.name} usunięta'),
-        duration: const Duration(seconds: 3),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {
-            setState(() {
-              shoppingLists.insert(
-                listIndex,
-                list,
-              );
-            });
-          },
-        ),
-      ),
-    );
-  }
-
-  void changeListName(ShoppingList list) async {
-    final updatedList = await showModalBottomSheet(
-      useSafeArea: true,
-      isScrollControlled: true,
-      context: context,
-      builder: (context) => EditShoppingListName(listToEdit: list),
-    );
-    final listIndex = shoppingLists.indexOf(list);
-    if (updatedList != null) {
-      setState(() {
-        shoppingLists[listIndex] = updatedList;
-      });
-    }
+    // ignore: use_build_context_synchronously
+    context
+        .read<ShoppingListBloc>()
+        .add(AddShoppingListEvent(shoppingList: list));
   }
 
   @override
@@ -127,7 +67,6 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
                 for (var shoppingList in shoppingLists)
                   ShoppingListSingleList(
                     shoppingList: shoppingList,
-                    onSingleListClick: openList,
                   ),
               ],
             ),

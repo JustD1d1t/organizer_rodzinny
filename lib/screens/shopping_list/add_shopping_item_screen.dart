@@ -1,44 +1,24 @@
 import "package:flutter/material.dart";
-import "package:organizer_rodzinny/blocs/bloc_exports.dart";
+import 'package:organizer_rodzinny/blocs/bloc_exports.dart';
 import 'package:organizer_rodzinny/data/dummy_data.dart';
-import "package:organizer_rodzinny/models/shopping_list.dart";
-import "package:organizer_rodzinny/models/shopping_list_item.dart";
+import 'package:organizer_rodzinny/models/shopping_list_item.dart';
 
-class AddShopingItemScreen extends StatefulWidget {
-  const AddShopingItemScreen({
+class AddShoppingItemScreen extends StatefulWidget {
+  const AddShoppingItemScreen({
     super.key,
-    required this.appBarTitle,
-    required this.shoppingList,
-    this.shoppingListItem,
   });
-  final ShoppingListItem? shoppingListItem;
-  final String appBarTitle;
-  final ShoppingList shoppingList;
 
   static const id = "add_shopping_item_screen";
 
   @override
-  State<AddShopingItemScreen> createState() => _AddShopingItemScreenState();
+  State<AddShoppingItemScreen> createState() => _AddShoppingItemScreenState();
 }
 
-class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
+class _AddShoppingItemScreenState extends State<AddShoppingItemScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _shoppingItemName;
   var _shoppingItemCategory;
-  var _shoppingItemChecked;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.shoppingListItem != null) {
-      _shoppingItemName = widget.shoppingListItem!.name;
-      _shoppingItemCategory = widget.shoppingListItem!.category;
-      _shoppingItemChecked = widget.shoppingListItem!.checked;
-    } else {
-      _shoppingItemChecked = false;
-    }
-  }
 
   void _saveForm() {
     final isValid = _formKey.currentState!.validate();
@@ -47,26 +27,27 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
     }
 
     _formKey.currentState!.save();
+    final id = context.read<AppStateBloc>().state.currentShoppingListId;
     context.read<ShoppingListBloc>().add(
           AddItemToShoppingList(
             shoppingListItem: ShoppingListItem(
               name: _shoppingItemName,
-              checked: _shoppingItemChecked,
+              checked: false,
               category: _shoppingItemCategory,
+              id: "",
             ),
-            shoppingList: widget.shoppingList,
+            shoppingListId: id,
           ),
         );
 
     Navigator.of(context).pop();
-    // Navigator.of(context).pushReplacementNamed(ShoppingListScreen.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.appBarTitle),
+        title: const Text('Dodaj element'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
@@ -103,15 +84,6 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                   onChanged: (value) => setState(() {
                         _shoppingItemCategory = value;
                       }),
-                  // items: Category.values
-                  //     .asMap()
-                  //     .entries
-                  //     .map<DropdownMenuItem<String>>((category) {
-                  //   return DropdownMenuItem<String>(
-                  //     value: category.value.label.toString(),
-                  //     child: Text(category.value.label.toString()),
-                  //   );
-                  // }).toList()),
                   items: availableCategories
                       .map((cat) => DropdownMenuItem<String>(
                             value: cat['name'].toString(),
@@ -132,21 +104,16 @@ class _AddShopingItemScreenState extends State<AddShopingItemScreen> {
                   ),
                 ],
               ),
-              const Text('Wybierz z listy'),
-              ...availableCategories
-                  .map(
-                    (cat) => ListTile(
-                      title: Text(cat['name'].toString()),
-                      onTap: () {
-                        // setState(() {
-                        //   _shoppingItemName = cat['name'].toString();
-                        //   _shoppingItemCategory = cat['name'].toString();
-                        // });
-                      },
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
-                  )
-                  .toList(),
+              // const Text('Wybierz z listy'),
+              // ...availableCategories
+              //     .map(
+              //       (cat) => ListTile(
+              //         title: Text(cat['name'].toString()),
+              //         onTap: () {},
+              //         trailing: const Icon(Icons.arrow_forward),
+              //       ),
+              //     )
+              //     .toList(),
             ],
           ),
         ),

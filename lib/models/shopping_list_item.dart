@@ -3,19 +3,18 @@ import "package:uuid/uuid.dart";
 
 const uuid = Uuid();
 
+// ignore: must_be_immutable
 class ShoppingListItem extends Equatable {
-  ShoppingListItem({
-    required this.name,
-    required this.category,
-    // required this.quantity,
-    // required this.unit,
-    required this.checked,
-  }) : id = uuid.v4();
+  ShoppingListItem(
+      {required this.name,
+      required this.category,
+      required this.checked,
+      required this.id}) {
+    id = id.isEmpty ? uuid.v4() : id;
+  }
 
-  final String id;
+  String id;
   final String name;
-  // final double? quantity;
-  // final String? unit;
   final String? category;
   bool checked;
 
@@ -33,6 +32,7 @@ class ShoppingListItem extends Equatable {
       name: map["name"],
       category: map["category"],
       checked: map["checked"],
+      id: map["id"],
     );
   }
 

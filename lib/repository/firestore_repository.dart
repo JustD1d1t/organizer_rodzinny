@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:organizer_rodzinny/models/Ingredient.dart';
 import 'package:organizer_rodzinny/models/shopping_list.dart';
 import 'package:organizer_rodzinny/models/shopping_list_item.dart';
 
@@ -36,6 +35,7 @@ class FirestoreRepository {
           ),
         );
       }
+      // print(shoppingLists);
       return shoppingLists;
     } catch (e) {
       throw Exception(e.toString());
@@ -47,7 +47,6 @@ class FirestoreRepository {
       name: '',
       list: [],
       id: '',
-      recipesList: [],
     );
     try {
       FirebaseFirestore.instance
@@ -65,41 +64,34 @@ class FirestoreRepository {
     }
   }
 
-  static Future<Map<String, List<dynamic>>> getShoppingListItems(
-      shoppingListId) async {
-    List<ShoppingListItem> shoppingListItems = [];
-    List<ShoppingRecipeIngredient> shoppingRecipeIngredients = [];
+  static Future<void> addItemToShoppingList(
+      ShoppingListItem shoppingListItem, String shoppingListId) async {
     try {
-      final shoppingListSnapshot = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
           .doc(GetStorage().read('uid'))
           .collection('shopping-lists')
           .doc(shoppingListId)
-          .get();
-      if (shoppingListSnapshot.exists) {
-        final shoppingListData =
-            shoppingListSnapshot.data() as Map<String, dynamic>;
-        final list = shoppingListSnapshot['list'];
-        final recipeList = shoppingListSnapshot['recipesList'];
-        for (var item in list) {
-          shoppingListItems.add(
-            ShoppingListItem.fromMap(
-              item,
-            ),
-          );
-        }
-        for (var item in recipeList) {
-          shoppingRecipeIngredients.add(
-            ShoppingRecipeIngredient.fromMap(
-              item,
-            ),
-          );
-        }
-      }
-      return {
-        'shoppingListItems': shoppingListItems,
-        'shoppingRecipeIngredients': shoppingRecipeIngredients
-      };
+          .update(
+        {
+          'list': FieldValue.arrayUnion([shoppingListItem.toMap()]),
+        },
+      );
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<void> removeShoppingList(
+    String shoppingListId,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(GetStorage().read('uid'))
+          .collection('shopping-lists')
+          .doc(shoppingListId)
+          .delete();
     } catch (e) {
       throw Exception(e.toString());
     }
