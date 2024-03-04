@@ -63,16 +63,16 @@ class ShoppingListBloc
 
     await FirestoreRepository.updateShoppingList(shoppingList);
 
-    final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
-        Map.from(state.shoppingListItems);
-    List<ShoppingListItem> shoppingListItems =
-        copiedShoppingListItems[event.shoppingListId]!;
-    shoppingListItems.add(event.shoppingListItem);
+    // final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
+    //     Map.from(state.shoppingListItems);
+    // List<ShoppingListItem> shoppingListItems =
+    //     copiedShoppingListItems[event.shoppingListId]!;
+    // shoppingListItems.add(event.shoppingListItem);
 
     emit(
       ShoppingListState(
         shoppingLists: copiedShoppingLists,
-        shoppingListItems: copiedShoppingListItems,
+        shoppingListItems: state.shoppingListItems,
       ),
     );
   }

@@ -38,7 +38,7 @@ class TileGridItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                tile.icon,
+                tile.icon!,
               ],
             ),
           ],
