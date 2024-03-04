@@ -28,8 +28,19 @@ class ShoppingListBloc
   }
   void _loadShoppingLists(
       LoadShoppingListsEvent event, Emitter<ShoppingListState> emit) async {
-    final List<ShoppingList> shoppingLists =
-        await FirestoreRepository.getAllShoppingLists();
+    // final List<ShoppingList> shoppingLists =
+    //     await FirestoreRepository.getAllShoppingLists();
+    // final Map<String, List<ShoppingListItem>> shoppingListItems = {};
+    // for (var shoppingList in shoppingLists) {
+    //   shoppingListItems[shoppingList.id] = shoppingList.list;
+    // }
+    // emit(
+    //   ShoppingListState(
+    //     shoppingLists: shoppingLists,
+    //     shoppingListItems: shoppingListItems,
+    //   ),
+    // );
+    final List<ShoppingList> shoppingLists = state.shoppingLists;
     final Map<String, List<ShoppingListItem>> shoppingListItems = {};
     for (var shoppingList in shoppingLists) {
       shoppingListItems[shoppingList.id] = shoppingList.list;
@@ -54,24 +65,24 @@ class ShoppingListBloc
 
   void _addItemToShoppingList(
       AddItemToShoppingList event, Emitter<ShoppingListState> emit) async {
-    final List<ShoppingList> copiedShoppingLists =
-        List.from(state.shoppingLists);
-    ShoppingList shoppingList = copiedShoppingLists.firstWhere(
-      (element) => element.id == event.shoppingListId,
-    );
-    shoppingList.list.add(event.shoppingListItem);
+    // final List<ShoppingList> copiedShoppingLists =
+    //     List.from(state.shoppingLists);
+    // ShoppingList shoppingList = copiedShoppingLists.firstWhere(
+    //   (element) => element.id == event.shoppingListId,
+    // );
+    // shoppingList.list.add(event.shoppingListItem);
 
-    await FirestoreRepository.updateShoppingList(shoppingList);
+    // await FirestoreRepository.updateShoppingList(shoppingList);
 
-    // final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
-    //     Map.from(state.shoppingListItems);
-    // List<ShoppingListItem> shoppingListItems =
-    //     copiedShoppingListItems[event.shoppingListId]!;
-    // shoppingListItems.add(event.shoppingListItem);
+    final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
+        Map.from(state.shoppingListItems);
+    List<ShoppingListItem> shoppingListItems =
+        copiedShoppingListItems[event.shoppingListId]!;
+    shoppingListItems.add(event.shoppingListItem);
 
     emit(
       ShoppingListState(
-        shoppingLists: copiedShoppingLists,
+        shoppingLists: state.shoppingLists,
         shoppingListItems: state.shoppingListItems,
       ),
     );
