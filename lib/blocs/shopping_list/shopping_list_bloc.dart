@@ -55,12 +55,16 @@ class ShoppingListBloc
 
   void _addShoppingList(
       AddShoppingListEvent event, Emitter<ShoppingListState> emit) async {
+    final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
+        Map.from(state.shoppingListItems);
+    copiedShoppingListItems[event.shoppingList.id] = event.shoppingList.list;
     emit(
-      state.copyWith(
+      ShoppingListState(
         shoppingLists: List.from(state.shoppingLists)..add(event.shoppingList),
+        shoppingListItems: copiedShoppingListItems,
       ),
     );
-    await FirestoreRepository.createShoppingList(event.shoppingList);
+    // await FirestoreRepository.createShoppingList(event.shoppingList);
   }
 
   void _addItemToShoppingList(
@@ -83,7 +87,7 @@ class ShoppingListBloc
     emit(
       ShoppingListState(
         shoppingLists: state.shoppingLists,
-        shoppingListItems: state.shoppingListItems,
+        shoppingListItems: copiedShoppingListItems..remove(shoppingListItems),
       ),
     );
   }
