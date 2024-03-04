@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 
-class ShoppingListSingleItem extends StatefulWidget {
+class ShoppingListSingleItem extends StatelessWidget {
   const ShoppingListSingleItem({
     super.key,
     required this.shoppingListItem,
@@ -12,22 +12,13 @@ class ShoppingListSingleItem extends StatefulWidget {
   final String shoppingListId;
   final ShoppingListItem shoppingListItem;
 
-  @override
-  State<ShoppingListSingleItem> createState() => _ShoppingListSingleItemState();
-}
+  void changeSelection(bool value) {}
 
-class _ShoppingListSingleItemState extends State<ShoppingListSingleItem> {
-  void changeSelection(bool) {
-    setState(() {
-      widget.shoppingListItem.checked = bool;
-    });
-  }
-
-  void removeItem() {
+  void removeItem(BuildContext context) {
     context.read<ShoppingListBloc>().add(
           RemoveItemFromShoppingList(
-            shoppingListItem: widget.shoppingListItem,
-            shoppingListId: widget.shoppingListId,
+            shoppingListItem: shoppingListItem,
+            shoppingListId: shoppingListId,
           ),
         );
   }
@@ -40,12 +31,12 @@ class _ShoppingListSingleItemState extends State<ShoppingListSingleItem> {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: ListTile(
-        title: Text(widget.shoppingListItem.name),
+        title: Text(shoppingListItem.name),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Checkbox(
-              value: widget.shoppingListItem.checked,
+              value: shoppingListItem.checked,
               onChanged: (bool? value) {
                 changeSelection(
                   value!,
@@ -54,7 +45,9 @@ class _ShoppingListSingleItemState extends State<ShoppingListSingleItem> {
             ),
             IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: removeItem,
+              onPressed: () {
+                removeItem(context);
+              },
             ),
           ],
         ),

@@ -1,18 +1,13 @@
 import "package:flutter/material.dart";
 
-class AddStep extends StatefulWidget {
-  const AddStep({super.key});
+class AddStep extends StatelessWidget {
+  AddStep({super.key});
 
-  @override
-  State<AddStep> createState() => _AddStepState();
-}
-
-class _AddStepState extends State<AddStep> {
   final _formKey = GlobalKey<FormState>();
 
   var _ingredientName = "";
 
-  void _saveForm() {
+  void _saveForm(BuildContext context) {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -55,7 +50,9 @@ class _AddStepState extends State<AddStep> {
               },
             ),
             ElevatedButton(
-              onPressed: _saveForm,
+              onPressed: () {
+                _saveForm(context);
+              },
               child: const Text("Dodaj krok"),
             ),
           ],

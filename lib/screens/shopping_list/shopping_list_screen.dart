@@ -6,31 +6,19 @@ import "package:organizer_rodzinny/screens/shopping_list/add_shopping_item_scree
 import "package:organizer_rodzinny/widgets/shopping_list/edit_shopping_list_name.dart";
 import 'package:organizer_rodzinny/widgets/shopping_list/list_of_shopping_items.dart';
 
-class ShoppingListScreen extends StatefulWidget {
+class ShoppingListScreen extends StatelessWidget {
   const ShoppingListScreen({super.key});
 
-  @override
-  State<ShoppingListScreen> createState() => _ShoppingListScreenState();
-}
-
-class _ShoppingListScreenState extends State<ShoppingListScreen> {
   // void openAddRecipeScreen() async {
-  //   await Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (ctx) => const AddShoppingRecipeScreen(),
-  //     ),
-  //   );
-  // }
-
-  void openAddShoppingItemScreen() async {
+  void openAddShoppingItemScreen(BuildContext context) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => const AddShoppingItemScreen(),
+        builder: (ctx) => AddShoppingItemScreen(),
       ),
     );
   }
 
-  void openEditName() async {
+  void openEditName(BuildContext context) async {
     final shoppingListId =
         context.read<AppStateBloc>().state.currentShoppingListId;
     final shoppingList =
@@ -46,7 +34,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     );
   }
 
-  void removeShoppingList() {
+  void removeShoppingList(BuildContext context) {
     Navigator.of(context).pop();
     context.read<ShoppingListBloc>().add(
           RemoveShoppingList(
@@ -56,21 +44,6 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   }
 
   // void selectAddButton() async {
-  //   final selectedItem = await showModalBottomSheet(
-  //     useSafeArea: true,
-  //     isScrollControlled: true,
-  //     context: context,
-  //     builder: (context) => const SelectAddItemBottomSheet(),
-  //   );
-  //   if (selectedItem != null) {
-  //     if (selectedItem["type"] == "item") {
-  //       openAddShoppingItemScreen();
-  //     } else {
-  //       openAddRecipeScreen();
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ShoppingListBloc, ShoppingListState>(
@@ -86,15 +59,21 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             actions: [
               IconButton(
                 icon: const Icon(Icons.delete),
-                onPressed: removeShoppingList,
+                onPressed: () {
+                  removeShoppingList(context);
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: openEditName,
+                onPressed: () {
+                  openEditName(context);
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.add),
-                onPressed: openAddShoppingItemScreen,
+                onPressed: () {
+                  openAddShoppingItemScreen(context);
+                },
               ),
             ],
           ),

@@ -1,18 +1,13 @@
 import "package:flutter/material.dart";
 
-class AddIngredient extends StatefulWidget {
-  const AddIngredient({super.key});
+class AddIngredient extends StatelessWidget {
+  AddIngredient({super.key});
 
-  @override
-  State<AddIngredient> createState() => _AddIngredientState();
-}
-
-class _AddIngredientState extends State<AddIngredient> {
   final _formKey = GlobalKey<FormState>();
 
   var _ingredientName = "";
 
-  void _saveForm() {
+  void _saveForm(BuildContext context) {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -55,7 +50,9 @@ class _AddIngredientState extends State<AddIngredient> {
               },
             ),
             ElevatedButton(
-              onPressed: _saveForm,
+              onPressed: () {
+                _saveForm(context);
+              },
               child: const Text("Dodaj składnik"),
             ),
           ],

@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/recipe.dart";
 
-class ShoppingListReceipeIngredients extends StatefulWidget {
+class ShoppingListReceipeIngredients extends StatelessWidget {
   const ShoppingListReceipeIngredients({
     super.key,
     required this.appBarTitle,
@@ -12,13 +12,6 @@ class ShoppingListReceipeIngredients extends StatefulWidget {
 
   static const id = "shopping_list_receipe_ingredients";
 
-  @override
-  State<ShoppingListReceipeIngredients> createState() =>
-      _ShoppingListReceipeIngredientsState();
-}
-
-class _ShoppingListReceipeIngredientsState
-    extends State<ShoppingListReceipeIngredients> {
   @override
   Widget build(BuildContext context) {
     Widget content = const Column(
@@ -48,7 +41,7 @@ class _ShoppingListReceipeIngredientsState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.appBarTitle),
+        title: Text(appBarTitle),
       ),
       body: Padding(padding: const EdgeInsets.all(8), child: content),
     );

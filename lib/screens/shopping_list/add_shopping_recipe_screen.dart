@@ -2,17 +2,11 @@ import "package:flutter/material.dart";
 import 'package:organizer_rodzinny/data/dummy_data.dart';
 import 'package:organizer_rodzinny/widgets/shopping_list/recipe_item_to_shopping_list.dart';
 
-class AddShoppingRecipeScreen extends StatefulWidget {
-  const AddShoppingRecipeScreen({super.key});
+class AddShoppingRecipeScreen extends StatelessWidget {
+  AddShoppingRecipeScreen({super.key});
 
   static const id = "add_shopping_recipe_screen";
 
-  @override
-  State<AddShoppingRecipeScreen> createState() =>
-      _AddShoppingRecipeScreenState();
-}
-
-class _AddShoppingRecipeScreenState extends State<AddShoppingRecipeScreen> {
   final recipes = availableRecipes;
 
   @override

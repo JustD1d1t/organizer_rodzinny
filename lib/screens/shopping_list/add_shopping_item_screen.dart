@@ -4,24 +4,20 @@ import 'package:organizer_rodzinny/data/dummy_data.dart';
 import 'package:organizer_rodzinny/models/shopping_list_item.dart';
 import 'package:organizer_rodzinny/widgets/shopping_list/add_shopping_items/add_item_tile.dart';
 
-class AddShoppingItemScreen extends StatefulWidget {
-  const AddShoppingItemScreen({
+class AddShoppingItemScreen extends StatelessWidget {
+  AddShoppingItemScreen({
     super.key,
   });
 
   static const id = "add_shopping_item_screen";
 
-  @override
-  State<AddShoppingItemScreen> createState() => _AddShoppingItemScreenState();
-}
-
-class _AddShoppingItemScreenState extends State<AddShoppingItemScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _shoppingItemName;
+
   var _shoppingItemCategory;
 
-  void _saveForm() {
+  void _saveForm(BuildContext context) {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -137,7 +133,7 @@ class _AddShoppingItemScreenState extends State<AddShoppingItemScreen> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                _saveForm();
+                                _saveForm(context);
                               },
                               child: const Text("Zapisz"),
                             ),
