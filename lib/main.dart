@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
                   .read<AppStateBloc>()
                   .add(SetUserId(id: snapshot.data!.uid));
               GetStorage().write('uid', snapshot.data!.uid);
-              return const MainScreen();
+              return MainScreen();
             }
 
             return const AuthScreen();
