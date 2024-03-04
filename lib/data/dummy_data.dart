@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/Ingredient.dart";
 import 'package:organizer_rodzinny/models/recipe.dart';
-import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import 'package:organizer_rodzinny/models/tile.dart';
 
 final availableTiles = [
@@ -59,26 +58,285 @@ final availableCategories = [
   {
     'name': "Napoje",
     'items': [
-      ShoppingListItem(name: 'Ale', category: 'Napoje', checked: false, id: ''),
-      ShoppingListItem(name: 'Białe wino', category: 'Napoje', checked: false, id: ''),
-      ShoppingListItem(name: 'Cola', category: 'Napoje', checked: false, id: ''),
-      ShoppingListItem(
-          name: 'Czerwone wino', category: 'Napoje', checked: false, id: ''),
+      {
+        'name': 'Ale',
+        'category': 'Napoje',
+        'checked': false,
+        'icon': const Icon(Icons.local_drink_sharp)
+      },
+      {
+        'name': 'Białe wino',
+        'category': 'Napoje',
+        'checked': false,
+        'icon': const Icon(Icons.local_drink_sharp)
+      },
+      {
+        'name': 'Cola',
+        'category': 'Napoje',
+        'checked': false,
+        'icon': const Icon(Icons.local_drink_sharp)
+      },
+      {
+        'name': 'Czerwone wino wytrawne',
+        'category': 'Napoje',
+        'checked': false,
+        'icon': const Icon(Icons.local_drink_sharp)
+      },
     ]
   },
   {
     'name': "Owoce i Warzywa",
+    'items': [
+      {
+        'name': 'Pomidor',
+        'category': 'Owoce i Warzywa',
+        'checked': false,
+        'icon': const Icon(Icons.apple)
+      },
+      {
+        'name': 'Ogórek',
+        'category': 'Owoce i Warzywa',
+        'checked': false,
+        'icon': const Icon(Icons.apple)
+      },
+      {
+        'name': 'Marchewka',
+        'category': 'Owoce i Warzywa',
+        'checked': false,
+        'icon': const Icon(Icons.apple)
+      },
+      {
+        'name': 'Jabłko',
+        'category': 'Owoce i Warzywa',
+        'checked': false,
+        'icon': const Icon(Icons.apple)
+      },
+    ]
   },
-  {'name': "Chleb i inne wypieki"},
-  {'name': "Mleko i ser"},
-  {'name': "Mięso i ryba"},
-  {'name': "Składniki i przyprawy"},
-  {'name': "Mrożonki i garmażeria"},
-  {'name': "Produkty zbożowe"},
-  {'name': "Przekąski i słodycze"},
-  {'name': "Gospodarstwo domowe"},
-  {'name': "Zdrowie"},
-  {'name': "Artkykuły dla zwierząt"},
+  {
+    'name': "Chleb i inne wypieki",
+    'items': [
+      {
+        'name': 'Chleb',
+        'category': 'Chleb i inne wypieki',
+        'checked': false,
+        'icon': const Icon(Icons.breakfast_dining)
+      },
+      {
+        'name': 'Bułka',
+        'category': 'Chleb i inne wypieki',
+        'checked': false,
+        'icon': const Icon(Icons.breakfast_dining)
+      },
+      {
+        'name': 'Pączek',
+        'category': 'Chleb i inne wypieki',
+        'checked': false,
+        'icon': const Icon(Icons.breakfast_dining)
+      },
+    ]
+  },
+  {
+    'name': "Mleko i ser",
+    'items': [
+      {
+        'name': 'Mleko',
+        'category': 'Mleko i ser',
+        'checked': false,
+        'icon': const Icon(Icons.cottage)
+      },
+      {
+        'name': 'Ser',
+        'category': 'Mleko i ser',
+        'checked': false,
+        'icon': const Icon(Icons.cottage)
+      }
+    ]
+  },
+  {
+    'name': "Mięso i ryba",
+    'items': [
+      {
+        'name': 'Kurczak',
+        'category': 'Mięso i ryba',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Wołowina',
+        'category': 'Mięso i ryba',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Łosoś',
+        'category': 'Mięso i ryba',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+    ]
+  },
+  {
+    'name': "Składniki i przyprawy",
+    'items': [
+      {
+        'name': 'Mąka',
+        'category': 'Składniki i przyprawy',
+        'checked': false,
+        'icon': const Icon(Icons.restaurant)
+      },
+      {
+        'name': 'Cukier',
+        'category': 'Składniki i przyprawy',
+        'checked': false,
+        'icon': const Icon(Icons.restaurant)
+      },
+      {
+        'name': 'Sól',
+        'category': 'Składniki i przyprawy',
+        'checked': false,
+        'icon': const Icon(Icons.restaurant)
+      },
+    ]
+  },
+  {
+    'name': "Mrożonki i garmażeria",
+    'items': [
+      {
+        'name': 'Lody',
+        'category': 'Mrożonki i garmażeria',
+        'checked': false,
+        'icon': const Icon(Icons.icecream)
+      },
+      {
+        'name': 'Frytki',
+        'category': 'Mrożonki i garmażeria',
+        'checked': false,
+        'icon': const Icon(Icons.icecream)
+      },
+      {
+        'name': 'Pizza',
+        'category': 'Mrożonki i garmażeria',
+        'checked': false,
+        'icon': const Icon(Icons.icecream)
+      },
+    ]
+  },
+  {
+    'name': "Produkty zbożowe",
+    'items': [
+      {
+        'name': 'Makaron',
+        'category': 'Produkty zbożowe',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Ryż',
+        'category': 'Produkty zbożowe',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Kasza',
+        'category': 'Produkty zbożowe',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+    ]
+  },
+  {
+    'name': "Przekąski i słodycze",
+    'items': [
+      {
+        'name': 'Czekolada',
+        'category': 'Przekąski i słodycze',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Chipsy',
+        'category': 'Przekąski i słodycze',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Ciastka',
+        'category': 'Przekąski i słodycze',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+    ]
+  },
+  {
+    'name': "Gospodarstwo domowe",
+    'items': [
+      {
+        'name': 'Papier toaletowy',
+        'category': 'Gospodarstwo domowe',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Płyn do naczyń',
+        'category': 'Gospodarstwo domowe',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Płyn do prania',
+        'category': 'Gospodarstwo domowe',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+    ]
+  },
+  {
+    'name': "Zdrowie",
+    'items': [
+      {
+        'name': 'Leki',
+        'category': 'Zdrowie',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Plastry',
+        'category': 'Zdrowie',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Witaminy',
+        'category': 'Zdrowie',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+    ]
+  },
+  {
+    'name': "Artkykuły dla zwierząt",
+    'items': [
+      {
+        'name': 'Karma dla psa',
+        'category': 'Artkykuły dla zwierząt',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Karma dla kota',
+        'category': 'Artkykuły dla zwierząt',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+      {
+        'name': 'Przysmaki',
+        'category': 'Artkykuły dla zwierząt',
+        'checked': false,
+        'icon': const Icon(Icons.fastfood)
+      },
+    ]
+  },
 ];
 
 final availableRecipes = [

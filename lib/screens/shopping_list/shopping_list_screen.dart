@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
+import "package:organizer_rodzinny/models/shopping_list_item.dart";
 import "package:organizer_rodzinny/screens/shopping_list/add_shopping_item_screen.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/edit_shopping_list_name.dart";
 import 'package:organizer_rodzinny/widgets/shopping_list/list_of_shopping_items.dart';
@@ -75,6 +76,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     return BlocBuilder<ShoppingListBloc, ShoppingListState>(
       builder: (context, state) {
         final id = context.read<AppStateBloc>().state.currentShoppingListId;
+        List<ShoppingListItem> shoppingListItems = state.shoppingListItems[id]!;
         ShoppingList shoppingList = state.shoppingLists.firstWhere(
           (element) => element.id == id,
         );
@@ -98,7 +100,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           ),
           body: ListOfShoppingItems(
             shoppingListId: shoppingList.id,
-            shoppingList: shoppingList.list,
+            shoppingList: shoppingListItems,
             // recipesList: shoppingList.recipesList,
           ),
         );

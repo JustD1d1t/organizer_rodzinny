@@ -20,6 +20,7 @@ class ShoppingListBloc
     on<RemoveItemFromShoppingList>(_removeItemFromShoppingList);
     on<EditShoppingListNameEvent>(_editShoppingListName);
     on<RemoveShoppingList>(_removeShoppingList);
+    on<RemoveItemFromShoppingListByName>(_removeItemFromShoppingListByName);
     // on<AddRecipeToShoppingList>(_addRecipeToShoppingList);
     // on<RemoveRecipeFromShoppingList>(_removeRecipeFromShoppingList);
     // on<RemoveIngredientFromShoppingRecipeItem>(
@@ -29,7 +30,16 @@ class ShoppingListBloc
       LoadShoppingListsEvent event, Emitter<ShoppingListState> emit) async {
     final List<ShoppingList> shoppingLists =
         await FirestoreRepository.getAllShoppingLists();
-    emit(state.copyWith(shoppingLists: shoppingLists));
+    final Map<String, List<ShoppingListItem>> shoppingListItems = {};
+    for (var shoppingList in shoppingLists) {
+      shoppingListItems[shoppingList.id] = shoppingList.list;
+    }
+    emit(
+      ShoppingListState(
+        shoppingLists: shoppingLists,
+        shoppingListItems: shoppingListItems,
+      ),
+    );
   }
 
   void _addShoppingList(
@@ -53,9 +63,16 @@ class ShoppingListBloc
 
     await FirestoreRepository.updateShoppingList(shoppingList);
 
+    final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
+        Map.from(state.shoppingListItems);
+    List<ShoppingListItem> shoppingListItems =
+        copiedShoppingListItems[event.shoppingListId]!;
+    shoppingListItems.add(event.shoppingListItem);
+
     emit(
-      state.copyWith(
+      ShoppingListState(
         shoppingLists: copiedShoppingLists,
+        shoppingListItems: copiedShoppingListItems,
       ),
     );
   }
@@ -71,9 +88,45 @@ class ShoppingListBloc
 
     await FirestoreRepository.updateShoppingList(shoppingList);
 
+    final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
+        Map.from(state.shoppingListItems);
+    List<ShoppingListItem> shoppingListItems =
+        copiedShoppingListItems[event.shoppingListId]!;
+    shoppingListItems.remove(event.shoppingListItem);
+
     emit(
-      state.copyWith(
+      ShoppingListState(
         shoppingLists: copiedShoppingLists,
+        shoppingListItems: copiedShoppingListItems,
+      ),
+    );
+  }
+
+  void _removeItemFromShoppingListByName(RemoveItemFromShoppingListByName event,
+      Emitter<ShoppingListState> emit) async {
+    final List<ShoppingList> copiedShoppingLists =
+        List.from(state.shoppingLists);
+    ShoppingList shoppingList = copiedShoppingLists.firstWhere(
+      (element) => element.id == event.shoppingListId,
+    );
+    shoppingList.list.removeWhere(
+      (element) => element.name == event.shoppingListItemName,
+    );
+
+    await FirestoreRepository.updateShoppingList(shoppingList);
+
+    final Map<String, List<ShoppingListItem>> copiedShoppingListItems =
+        Map.from(state.shoppingListItems);
+    List<ShoppingListItem> shoppingListItems =
+        copiedShoppingListItems[event.shoppingListId]!;
+    shoppingListItems.removeWhere(
+      (element) => element.name == event.shoppingListItemName,
+    );
+
+    emit(
+      ShoppingListState(
+        shoppingLists: copiedShoppingLists,
+        shoppingListItems: copiedShoppingListItems,
       ),
     );
   }
@@ -88,8 +141,8 @@ class ShoppingListBloc
 
     await FirestoreRepository.updateShoppingList(updatedShoppingList);
     emit(
-      ShoppingListState(
-        shoppingLists: state.shoppingLists
+      state.copyWith(
+        shoppingLists: List.from(state.shoppingLists)
           ..remove(shoppingList)
           ..insert(shoppingListIndex, updatedShoppingList),
       ),

@@ -17,7 +17,6 @@ class ListOfShoppingListsScreen extends StatefulWidget {
 class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
   @override
   void initState() {
-    print('initState');
     context.read<ShoppingListBloc>().add(const LoadShoppingListsEvent());
     super.initState();
   }
