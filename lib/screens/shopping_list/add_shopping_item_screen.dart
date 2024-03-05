@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:organizer_rodzinny/blocs/bloc_exports.dart';
 import 'package:organizer_rodzinny/data/dummy_data.dart';
 import 'package:organizer_rodzinny/models/shopping_list_item.dart';
+import 'package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart';
 import 'package:organizer_rodzinny/widgets/shopping_list/add_shopping_items/add_item_tile.dart';
 
 class AddShoppingItemScreen extends StatelessWidget {
@@ -25,16 +26,14 @@ class AddShoppingItemScreen extends StatelessWidget {
 
     _formKey.currentState!.save();
     final id = context.read<AppStateBloc>().state.currentShoppingListId;
-    context.read<ShoppingListBloc>().add(
-          AddItemToShoppingList(
-            shoppingListItem: ShoppingListItem(
-              name: _shoppingItemName,
-              checked: false,
-              category: _shoppingItemCategory,
-              id: "",
-            ),
-            shoppingListId: id,
+    context.read<ShoppingListCubit>().addItemToShoppingList(
+          ShoppingListItem(
+            name: _shoppingItemName,
+            checked: false,
+            category: _shoppingItemCategory,
+            id: "",
           ),
+          id,
         );
 
     Navigator.of(context).pop();
@@ -77,8 +76,7 @@ class AddShoppingItemScreen extends StatelessWidget {
                             AddItemTile(
                               item: item,
                               isActive: context
-                                  .read<ShoppingListBloc>()
-                                  .state
+                                  .read<ShoppingListCubit>()
                                   .shoppingListItems[context
                                       .read<AppStateBloc>()
                                       .state

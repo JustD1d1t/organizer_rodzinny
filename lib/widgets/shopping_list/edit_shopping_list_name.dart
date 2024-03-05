@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
+import "package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart";
 
 class EditShoppingListName extends StatelessWidget {
   EditShoppingListName({super.key, required this.listToEdit});
@@ -17,12 +18,11 @@ class EditShoppingListName extends StatelessWidget {
       return;
     }
     _formKey.currentState!.save();
-    context.read<ShoppingListBloc>().add(
-          EditShoppingListNameEvent(
-            listToEdit: listToEdit,
-            shoppingListName: _shoppingListName,
-          ),
+    context.read<ShoppingListCubit>().editShoppingListName(
+          listToEdit,
+          _shoppingListName,
         );
+
     Navigator.of(context).pop();
   }
 

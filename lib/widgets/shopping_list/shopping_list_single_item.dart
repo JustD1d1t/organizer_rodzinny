@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
+import "package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart";
 
 class ShoppingListSingleItem extends StatelessWidget {
   const ShoppingListSingleItem({
@@ -15,11 +16,9 @@ class ShoppingListSingleItem extends StatelessWidget {
   void changeSelection(bool value) {}
 
   void removeItem(BuildContext context) {
-    context.read<ShoppingListBloc>().add(
-          RemoveItemFromShoppingList(
-            shoppingListItem: shoppingListItem,
-            shoppingListId: shoppingListId,
-          ),
+    context.read<ShoppingListCubit>().removeItemFromShoppingList(
+          shoppingListItem.name,
+          shoppingListId,
         );
   }
 

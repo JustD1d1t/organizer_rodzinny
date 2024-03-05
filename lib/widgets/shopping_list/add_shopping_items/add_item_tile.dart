@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
+import "package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart";
 
 class AddItemTile extends StatelessWidget {
   const AddItemTile({
@@ -16,17 +17,14 @@ class AddItemTile extends StatelessWidget {
 
   void _handleShoppingItem(BuildContext context) {
     if (!isActive) {
-      context.read<ShoppingListBloc>().add(
-            AddItemToShoppingList(
-              shoppingListItem: ShoppingListItem(
-                name: item['name'],
-                checked: false,
-                category: item['category'],
-                id: "",
-              ),
-              shoppingListId:
-                  context.read<AppStateBloc>().state.currentShoppingListId,
+      context.read<ShoppingListCubit>().addItemToShoppingList(
+            ShoppingListItem(
+              name: item['name'],
+              checked: false,
+              category: item['category'],
+              id: "",
             ),
+            context.read<AppStateBloc>().state.currentShoppingListId,
           );
 
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -36,12 +34,9 @@ class AddItemTile extends StatelessWidget {
         ),
       );
     } else {
-      context.read<ShoppingListBloc>().add(
-            RemoveItemFromShoppingListByName(
-              shoppingListItemName: item['name'],
-              shoppingListId:
-                  context.read<AppStateBloc>().state.currentShoppingListId,
-            ),
+      context.read<ShoppingListCubit>().removeItemFromShoppingList(
+            item['name'],
+            context.read<AppStateBloc>().state.currentShoppingListId,
           );
 
       ScaffoldMessenger.of(context).clearSnackBars();

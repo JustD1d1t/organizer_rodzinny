@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:organizer_rodzinny/screens/auth/auth_screen.dart';
 import 'package:organizer_rodzinny/screens/auth/splash_screen.dart';
 import 'package:organizer_rodzinny/screens/main_screen.dart';
+import 'package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart';
 import 'package:organizer_rodzinny/services/app_router.dart';
 import "package:organizer_rodzinny/theme_config.dart";
 import 'package:path_provider/path_provider.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ShoppingListBloc()),
+        BlocProvider(create: (context) => ShoppingListCubit()),
         BlocProvider(create: (context) => AppStateBloc()),
       ],
       child: MaterialApp(

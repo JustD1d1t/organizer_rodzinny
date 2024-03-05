@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
+import "package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_item.dart";
 
 class ListOfShoppingItems extends StatelessWidget {
@@ -17,17 +18,14 @@ class ListOfShoppingItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShoppingListBloc, ShoppingListState>(
+    return BlocBuilder<ShoppingListCubit, ShoppingListCubitState>(
       builder: (context, state) {
-        // TODO: listen to state.shoppingListItems, not state.shoppingLists
-        List<ShoppingListItem> shoppingList = state.shoppingLists
+        List<ShoppingListItem> shoppingList = context
+            .read<ShoppingListCubit>()
+            .shoppingLists
             .where((shoppingList) => shoppingList.id == shoppingListId)
             .single
             .list;
-        // List<ShoppingRecipeItem> recipesList = state.shoppingLists
-        //     .where((shoppingList) => shoppingList.id == widget.shoppingListId)
-        //     .single
-        //     .recipesList;
         final List<dynamic> allShoppingItems = [
           ...shoppingList,
         ];
