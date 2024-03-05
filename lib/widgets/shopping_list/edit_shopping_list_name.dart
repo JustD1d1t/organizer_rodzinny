@@ -2,21 +2,16 @@ import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 
-class EditShoppingListName extends StatefulWidget {
-  const EditShoppingListName({super.key, required this.listToEdit});
+class EditShoppingListName extends StatelessWidget {
+  EditShoppingListName({super.key, required this.listToEdit});
 
   final ShoppingList listToEdit;
 
-  @override
-  State<EditShoppingListName> createState() => _EditShoppingListNameState();
-}
-
-class _EditShoppingListNameState extends State<EditShoppingListName> {
   final _formKey = GlobalKey<FormState>();
 
   var _shoppingListName = "";
 
-  void _saveForm() {
+  void _saveForm(BuildContext context) {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -24,7 +19,7 @@ class _EditShoppingListNameState extends State<EditShoppingListName> {
     _formKey.currentState!.save();
     context.read<ShoppingListBloc>().add(
           EditShoppingListNameEvent(
-            listToEdit: widget.listToEdit,
+            listToEdit: listToEdit,
             shoppingListName: _shoppingListName,
           ),
         );
@@ -62,7 +57,9 @@ class _EditShoppingListNameState extends State<EditShoppingListName> {
               },
             ),
             ElevatedButton(
-              onPressed: _saveForm,
+              onPressed: () {
+                _saveForm(context);
+              },
               child: const Text("Zmień nazwę"),
             ),
           ],

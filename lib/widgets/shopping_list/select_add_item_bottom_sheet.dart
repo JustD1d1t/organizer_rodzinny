@@ -1,15 +1,9 @@
 import "package:flutter/material.dart";
 
-class SelectAddItemBottomSheet extends StatefulWidget {
-  const SelectAddItemBottomSheet({super.key});
+class SelectAddItemBottomSheet extends StatelessWidget {
+  SelectAddItemBottomSheet({super.key});
 
-  @override
-  State<SelectAddItemBottomSheet> createState() =>
-      _SelectAddItemBottomSheetState();
-}
-
-class _SelectAddItemBottomSheetState extends State<SelectAddItemBottomSheet> {
-  setAddedItemType(type) {
+  setAddedItemType(BuildContext context, type) {
     Navigator.of(context).pop(
       {
         "type": type,
@@ -26,13 +20,13 @@ class _SelectAddItemBottomSheetState extends State<SelectAddItemBottomSheet> {
         children: [
           TextButton(
             onPressed: () {
-              setAddedItemType('item');
+              setAddedItemType(context, 'item');
             },
             child: const Text("Produkt"),
           ),
           TextButton(
             onPressed: () {
-              setAddedItemType('recipe');
+              setAddedItemType(context, 'recipe');
             },
             child: const Text("Posiłek"),
           )

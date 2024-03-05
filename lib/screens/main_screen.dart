@@ -11,14 +11,9 @@ import 'package:organizer_rodzinny/data/dummy_data.dart';
 import 'package:organizer_rodzinny/screens/shopping_list/list_of_shopping_lists_screen.dart';
 import 'package:organizer_rodzinny/widgets/tile_grid_item.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class MainScreen extends StatelessWidget {
+  MainScreen({Key? key}) : super(key: key);
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
   final List<Widget> widgetList = [
     // const ListsScreen(),
     // const FinancesScreen(),
@@ -29,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
     const ListOfShoppingListsScreen(),
     // const PantryScreen(),
   ];
+
   void _selectTile(BuildContext context, int index) {
     Navigator.of(context).push(
       MaterialPageRoute(

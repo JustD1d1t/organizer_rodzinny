@@ -4,30 +4,17 @@ import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/widgets/shopping_list/add_shopping_list.dart";
 import 'package:organizer_rodzinny/widgets/shopping_list/shopping_list_single_list.dart';
 
-class ListOfShoppingListsScreen extends StatefulWidget {
+class ListOfShoppingListsScreen extends StatelessWidget {
   const ListOfShoppingListsScreen({super.key});
 
   static const id = "list_of_shopping_lists_screen";
 
-  @override
-  State<ListOfShoppingListsScreen> createState() =>
-      _ListOfShoppingListsScreenState();
-}
-
-class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
-  @override
-  void initState() {
-    print('initState');
-    context.read<ShoppingListBloc>().add(const LoadShoppingListsEvent());
-    super.initState();
-  }
-
-  void addList() async {
+  void addList(BuildContext context) async {
     final list = await showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      builder: (context) => const AddShoppingList(),
+      builder: (context) => AddShoppingList(),
     );
     // ignore: use_build_context_synchronously
     context
@@ -37,6 +24,7 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ShoppingListBloc>().add(const LoadShoppingListsEvent());
     return BlocBuilder<ShoppingListBloc, ShoppingListState>(
       builder: (context, state) {
         List<ShoppingList> shoppingLists = state.shoppingLists;
@@ -45,7 +33,9 @@ class _ListOfShoppingListsScreenState extends State<ListOfShoppingListsScreen> {
             title: const Text("Listy zakupów"),
             actions: [
               IconButton(
-                onPressed: addList,
+                onPressed: () {
+                  addList(context);
+                },
                 icon: const Icon(Icons.add),
               ),
             ],

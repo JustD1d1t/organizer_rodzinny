@@ -79,6 +79,17 @@ class RemoveIngredientFromShoppingRecipeItem extends ShoppingListEvent {
       [shoppingListId, shoppingRecipeItem, shoppingRecipeIngredient];
 }
 
+class RemoveItemFromShoppingListByName extends ShoppingListEvent {
+  final String shoppingListItemName;
+  final String shoppingListId;
+
+  const RemoveItemFromShoppingListByName(
+      {required this.shoppingListItemName, required this.shoppingListId});
+
+  @override
+  List<Object> get props => [shoppingListItemName, shoppingListId];
+}
+
 class EditShoppingListNameEvent extends ShoppingListEvent {
   final ShoppingList listToEdit;
   final String shoppingListName;

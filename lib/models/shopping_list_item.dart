@@ -5,11 +5,12 @@ const uuid = Uuid();
 
 // ignore: must_be_immutable
 class ShoppingListItem extends Equatable {
-  ShoppingListItem(
-      {required this.name,
-      required this.category,
-      required this.checked,
-      required this.id}) {
+  ShoppingListItem({
+    required this.name,
+    required this.category,
+    required this.checked,
+    required this.id,
+  }) {
     id = id.isEmpty ? uuid.v4() : id;
   }
 

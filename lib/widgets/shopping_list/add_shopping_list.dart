@@ -2,14 +2,9 @@ import "package:flutter/material.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
 
-class AddShoppingList extends StatefulWidget {
-  const AddShoppingList({super.key});
+class AddShoppingList extends StatelessWidget {
+  AddShoppingList({super.key});
 
-  @override
-  State<AddShoppingList> createState() => _AddShoppingListState();
-}
-
-class _AddShoppingListState extends State<AddShoppingList> {
   final _formKey = GlobalKey<FormState>();
 
   var _shoppingListName = "";

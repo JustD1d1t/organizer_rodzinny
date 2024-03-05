@@ -37,22 +37,22 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (ctx) => const ReceiptsScreen(),
         );
-      case AddRecipeFromUrlScreen.id:
-        return MaterialPageRoute(
-          builder: (ctx) => const AddRecipeFromUrlScreen(),
-        );
-      case AddRecipeScreen.id:
-        return MaterialPageRoute(
-          builder: (ctx) => const AddRecipeScreen(),
-        );
+      // case AddRecipeFromUrlScreen.id:
+      //   return MaterialPageRoute(
+      //     builder: (ctx) => const AddRecipeFromUrlScreen(),
+      //   );
+      // case AddRecipeScreen.id:
+      //   return MaterialPageRoute(
+      //     builder: (ctx) => const AddRecipeScreen(),
+      //   );
       // case RecipeDetails.id:
       //   return MaterialPageRoute(
       //     builder: (ctx) => const RecipeDetails(),
       //   );
-      case RecipesScreen.id:
-        return MaterialPageRoute(
-          builder: (ctx) => const RecipesScreen(),
-        );
+      // case RecipesScreen.id:
+      //   return MaterialPageRoute(
+      //     builder: (ctx) => const RecipesScreen(),
+      // );
       // case AddShopingItemScreen.id:
       //   return MaterialPageRoute(
       //     builder: (ctx) => const AddShopingItemScreen(),
