@@ -18,7 +18,6 @@ class ShoppingListSingleItem extends StatelessWidget {
   void removeItem(BuildContext context) {
     context.read<ShoppingListCubit>().removeItemFromShoppingList(
           shoppingListItem.name,
-          shoppingListId,
         );
   }
 

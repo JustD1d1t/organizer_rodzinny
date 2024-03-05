@@ -12,9 +12,12 @@ final class ShoppingListInitial extends ShoppingListCubitState {}
 final class ShoppingListUpdatedState extends ShoppingListCubitState {
   final List<ShoppingList> shoppingLists;
   final Map<String, List<ShoppingListItem>> shoppingListItems;
+  String currentShoppingListId = "";
 
-  const ShoppingListUpdatedState(this.shoppingLists, this.shoppingListItems);
+  ShoppingListUpdatedState(
+      this.shoppingLists, this.shoppingListItems, this.currentShoppingListId);
 
   @override
-  List<Object> get props => [shoppingLists, shoppingListItems];
+  List<Object> get props =>
+      [shoppingLists, shoppingListItems, currentShoppingListId];
 }

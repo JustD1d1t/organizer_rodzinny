@@ -25,16 +25,12 @@ class AddShoppingItemScreen extends StatelessWidget {
     }
 
     _formKey.currentState!.save();
-    final id = context.read<AppStateBloc>().state.currentShoppingListId;
-    context.read<ShoppingListCubit>().addItemToShoppingList(
-          ShoppingListItem(
-            name: _shoppingItemName,
-            checked: false,
-            category: _shoppingItemCategory,
-            id: "",
-          ),
-          id,
-        );
+    context.read<ShoppingListCubit>().addItemToShoppingList(ShoppingListItem(
+          name: _shoppingItemName,
+          checked: false,
+          category: _shoppingItemCategory,
+          id: "",
+        ));
 
     Navigator.of(context).pop();
   }
@@ -78,8 +74,7 @@ class AddShoppingItemScreen extends StatelessWidget {
                               isActive: context
                                   .read<ShoppingListCubit>()
                                   .shoppingListItems[context
-                                      .read<AppStateBloc>()
-                                      .state
+                                      .read<ShoppingListCubit>()
                                       .currentShoppingListId]!
                                   .any((element) =>
                                       element.name == item['name']),

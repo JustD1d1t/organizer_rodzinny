@@ -21,7 +21,7 @@ class ShoppingListScreen extends StatelessWidget {
 
   void openEditName(BuildContext context) async {
     final shoppingListId =
-        context.read<AppStateBloc>().state.currentShoppingListId;
+        context.read<ShoppingListCubit>().currentShoppingListId;
     final shoppingList =
         context.read<ShoppingListCubit>().shoppingLists.firstWhere(
               (element) => element.id == shoppingListId,
@@ -37,12 +37,7 @@ class ShoppingListScreen extends StatelessWidget {
 
   void removeShoppingList(BuildContext context) {
     Navigator.of(context).pop();
-    context.read<ShoppingListCubit>().removeShoppingList(
-        context.read<ShoppingListCubit>().shoppingLists.firstWhere(
-              (element) =>
-                  element.id ==
-                  context.read<AppStateBloc>().state.currentShoppingListId,
-            ));
+    context.read<ShoppingListCubit>().removeShoppingList();
   }
 
   // void selectAddButton() async {
@@ -50,7 +45,7 @@ class ShoppingListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ShoppingListCubit, ShoppingListCubitState>(
       builder: (context, state) {
-        final id = context.read<AppStateBloc>().state.currentShoppingListId;
+        final id = context.read<ShoppingListCubit>().currentShoppingListId;
         List<ShoppingListItem> shoppingListItems =
             context.read<ShoppingListCubit>().shoppingListItems[id]!;
         ShoppingList shoppingList =

@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:organizer_rodzinny/blocs/bloc_exports.dart";
 import "package:organizer_rodzinny/models/shopping_list.dart";
 import "package:organizer_rodzinny/models/shopping_list_item.dart";
+import "package:organizer_rodzinny/screens/shopping_list/cubit/shopping_list_cubit.dart";
 import "package:organizer_rodzinny/screens/shopping_list/shopping_list_screen.dart";
 
 class ShoppingListSingleList extends StatelessWidget {
@@ -11,9 +12,9 @@ class ShoppingListSingleList extends StatelessWidget {
 
   void openList(
       BuildContext context, ShoppingList shoppingListSingleItem) async {
-    context.read<AppStateBloc>().add(
-          SetCurrentShoppingListId(id: shoppingList.id),
-        );
+    context
+        .read<ShoppingListCubit>()
+        .setCurrentShoppingListId(id: shoppingList.id);
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => const ShoppingListScreen(),

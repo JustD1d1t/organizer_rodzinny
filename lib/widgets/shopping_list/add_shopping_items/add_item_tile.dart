@@ -17,15 +17,12 @@ class AddItemTile extends StatelessWidget {
 
   void _handleShoppingItem(BuildContext context) {
     if (!isActive) {
-      context.read<ShoppingListCubit>().addItemToShoppingList(
-            ShoppingListItem(
-              name: item['name'],
-              checked: false,
-              category: item['category'],
-              id: "",
-            ),
-            context.read<AppStateBloc>().state.currentShoppingListId,
-          );
+      context.read<ShoppingListCubit>().addItemToShoppingList(ShoppingListItem(
+            name: item['name'],
+            checked: false,
+            category: item['category'],
+            id: "",
+          ));
 
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -34,10 +31,9 @@ class AddItemTile extends StatelessWidget {
         ),
       );
     } else {
-      context.read<ShoppingListCubit>().removeItemFromShoppingList(
-            item['name'],
-            context.read<AppStateBloc>().state.currentShoppingListId,
-          );
+      context
+          .read<ShoppingListCubit>()
+          .removeItemFromShoppingList(item['name']);
 
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
